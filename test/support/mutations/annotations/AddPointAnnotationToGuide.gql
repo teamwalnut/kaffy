@@ -1,0 +1,36 @@
+mutation AddPointAnnotationToGuide(
+  $guideId: ID!
+  $message: string!
+  $screenId: ID!
+  $richTextAsJson: String!
+  $cssSelector: String!
+  $frameSelectors: [String!]
+  $anchor: Anchor!
+  $hasOverlay: Boolean
+  $settings: AnnotationSettingsInput
+) {
+  addPointAnnotationToGuide(
+    guideId: $guideId
+    message: $message
+    richTextAsJson: $richTextAsJson
+    screenId: $screenId
+    cssSelector: $cssSelector
+    frameSelectors: $frameSelectors
+    anchor: $anchor
+    hasOverlay: $hasOverlay
+    settings: $settings
+  ) {
+    id
+    settings {
+      showMainButton
+      mainButtonText
+      showDismissButton
+      showBackButton
+      showAvatar
+      avatarUrl
+      avatarTitle
+      showDim
+      size
+    }
+  }
+}

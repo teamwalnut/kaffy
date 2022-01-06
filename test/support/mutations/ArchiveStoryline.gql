@@ -1,0 +1,14 @@
+mutation ArchiveStoryline($storylineId: ID!) {
+  archiveStoryline(storylineId: $storylineId) {
+    id
+    name
+    archivedAt
+    collaborators {
+      member {
+        user {
+          email
+        }
+      }
+    }
+  }
+}

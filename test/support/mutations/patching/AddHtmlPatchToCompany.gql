@@ -1,0 +1,13 @@
+mutation AddHtmlPatchToCompany(
+  $name: String!
+  $companyId: ID!
+  $htmlPatch: HtmlPatchInputObject
+) {
+  addHtmlPatchToCompany(
+    name: $name
+    companyId: $companyId
+    htmlPatch: $htmlPatch
+  ) {
+    id
+  }
+}

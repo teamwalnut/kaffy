@@ -1,0 +1,6 @@
+mutation RenameGuide($id: ID!, $name: String) {
+  renameGuide(id: $id, name: $name) {
+    id
+    name
+  }
+}

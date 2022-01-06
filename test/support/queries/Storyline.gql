@@ -1,0 +1,28 @@
+query Storyline($id: ID) {
+  storyline(id: $id) {
+    id
+    name
+    lastEdited
+    screensCount
+    startScreen {
+      id
+      name
+    }
+    screens {
+      id
+      name
+    }
+    flows {
+      name
+      is_default
+      screens {
+        name
+        id
+      }
+    }
+    guides {
+      id
+      priority
+    }
+  }
+}

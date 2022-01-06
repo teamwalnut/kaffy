@@ -1,0 +1,10 @@
+mutation AddCollaboratorToStoryline($storylineId: ID!, $memberId: ID!) {
+  addCollaboratorToStoryline(storylineId: $storylineId, memberId: $memberId) {
+    storyline {
+      id
+    }
+    member {
+      id
+    }
+  }
+}

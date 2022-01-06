@@ -1,0 +1,37 @@
+{:ok,
+ %{
+   data: %{
+     "updateCompanySettings" => %{
+       "disableLoader" => true,
+       "guidesSettings" => %{
+         "accentColor" => "#444444",
+         "avatarTitle" => "Paz from Walnut",
+         "avatarUrl" => "https://dummyimage.com/256x256/000/fff",
+         "backgroundColor" => "#654321",
+         "celebrateGuidesCompletion" => false,
+         "dimByDefault" => true,
+         "dimStyle" => "SOFT",
+         "fab" => %{
+           "enabled" => true,
+           "position" => "BOTTOM_LEFT",
+           "targetUrl" => "https://walnut.io",
+           "text" => "Call to Action"
+         },
+         "fontColor" => "#123456",
+         "fontSize" => 14,
+         "glowColor" => "#efcbb150",
+         "hideDismiss" => false,
+         "mainButtonText" => "n3xT",
+         "showAvatar" => true,
+         "showBackButton" => false,
+         "showDismissButton" => true,
+         "showGlow" => false,
+         "showMainButton" => false,
+         "smoothScrolling" => false
+       },
+       "id" => "scrubbed",
+       "mainColor" => "#123456",
+       "secondaryColor" => "#abcdef10"
+     }
+   }
+ }}

@@ -1,0 +1,111 @@
+[
+  %{
+    "cssSelector" => ".text",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => nil,
+    "id" => "scrubbed",
+    "kind" => "TEXT",
+    "lastEditedAt" => "scrubbed",
+    "textEditProps" => %{
+      "originalText" => "original text",
+      "text" => "new text"
+    }
+  },
+  %{
+    "cssSelector" => ".text",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "TEXT",
+    "lastEditedAt" => "scrubbed",
+    "textEditProps" => %{
+      "originalText" => "original text",
+      "text" => "new text"
+    }
+  },
+  %{
+    "cssSelector" => ".style",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "STYLE",
+    "lastEditedAt" => "scrubbed",
+    "styleEditProps" => %{
+      "bold" => true,
+      "color" => "#ssss",
+      "font_size" => "10px",
+      "hide" => true,
+      "underline" => true
+    }
+  },
+  %{
+    "changeImageEditProps" => %{
+      "imageUrl" => "some url",
+      "originalImageUrl" => "original url"
+    },
+    "cssSelector" => ".image",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "CHANGE_IMAGE",
+    "lastEditedAt" => "scrubbed"
+  },
+  %{
+    "cssSelector" => ".link",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "LINK",
+    "lastEditedAt" => "scrubbed",
+    "linkEditProps" => %{
+      "destination" => %{
+        "href" => "https://www.google.com",
+        "target" => "NEW_TAB"
+      }
+    }
+  },
+  %{
+    "cssSelector" => ".link",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "LINK",
+    "lastEditedAt" => "scrubbed",
+    "linkEditProps" => %{
+      "destination" => %{"delayMs" => 1000, "screen" => %{"id" => "scrubbed"}}
+    }
+  },
+  %{
+    "cssSelector" => ".scroll",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "SCROLL",
+    "lastEditedAt" => "scrubbed",
+    "scrollEditProps" => %{"left" => 0.0, "top" => 125.0}
+  },
+  %{
+    "cssSelector" => ".html",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "htmlEditProps" => %{
+      "originalValue" => "original dom element",
+      "value" => "updated dom element"
+    },
+    "id" => "scrubbed",
+    "kind" => "HTML",
+    "lastEditedAt" => "scrubbed"
+  },
+  %{
+    "bindingEditProps" => %{
+      "originalText" => "original dom element",
+      "program" => "{\"@astVersion\":\"Ast_20210525\",\"@envVersion\":\"Env_20210525\",\"@expression\":{\"@args\":[{\"@name\":\"name\",\"@value\":\"name test\"},{\"@name\":\"defaultValue\",\"@value\":\"default value\"},{\"@name\":\"description\",\"@value\":\"desc\"}],\"@fnName\":\"PUBLIC_FIELD\",\"@id\":\"ef44f562-1d5e-4d38-bf59-7ef7a402380d\",\"@type\":\"Call\"}}"
+    },
+    "cssSelector" => ".bind",
+    "domSelector" => %{"xpathFrames" => [], "xpathNode" => "div"},
+    "frameSelectors" => ["iframe"],
+    "id" => "scrubbed",
+    "kind" => "BINDING",
+    "lastEditedAt" => "scrubbed"
+  }
+]

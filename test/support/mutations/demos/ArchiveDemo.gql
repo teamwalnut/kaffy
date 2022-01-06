@@ -1,0 +1,7 @@
+mutation ArchiveDemo($id: ID!) {
+  archiveDemo(demoId: $id) {
+    id
+    name
+    archivedAt
+  }
+}

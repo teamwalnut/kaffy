@@ -1,0 +1,7 @@
+#import "./Screen.frag.gql"
+
+query Screen($screenId: ID, $storylineId: ID) {
+  screen(screenId: $screenId, storylineId: $storylineId) {
+    ...ScreenFields
+  }
+}

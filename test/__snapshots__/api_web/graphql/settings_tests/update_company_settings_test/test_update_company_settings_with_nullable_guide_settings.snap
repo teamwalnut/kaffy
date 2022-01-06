@@ -1,0 +1,13 @@
+{:ok,
+ %{
+   data: nil,
+   errors: [
+     %{
+       code: :validation,
+       locations: [%{column: 3, line: 8}],
+       message: "Glow_color can't be blank",
+       path: ["updateCompanySettings"],
+       status_code: 422
+     }
+   ]
+ }}

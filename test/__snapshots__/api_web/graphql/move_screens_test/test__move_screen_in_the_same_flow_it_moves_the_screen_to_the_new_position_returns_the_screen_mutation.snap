@@ -1,0 +1,9 @@
+{:ok,
+ %{
+   data: %{
+     "moveScreens" => [
+       %{"id" => "scrubbed", "name" => "some name 2"},
+       %{"id" => "scrubbed", "name" => "some name 1"}
+     ]
+   }
+ }}

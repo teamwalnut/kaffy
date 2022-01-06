@@ -1,0 +1,6 @@
+mutation RepositionGuide($id: ID!, $newPriority: Int!) {
+  repositionGuide(id: $id, newPriority: $newPriority) {
+    id
+    priority
+  }
+}

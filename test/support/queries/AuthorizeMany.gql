@@ -1,0 +1,7 @@
+query AuthorizeMany(
+  $resource: Resource!
+  $ids: [ID!]!
+  $relationship: AuthorizationRelationship!
+) {
+  authorizeMany(resource: $resource, ids: $ids, relationship: $relationship)
+}

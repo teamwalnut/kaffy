@@ -1,0 +1,28 @@
+#import "../../fragments/GuidesSettings.frag.gql"
+mutation UpdateStorylineSettings(
+  $storylineId: ID!
+  $globalJs: String
+  $globalCss: String
+  $mainColor: String
+  $secondaryColor: String
+  $disableLoader: Boolean
+  $guidesSettings: GuidesSettingsInput
+) {
+  updateStorylineSettings(
+    storylineId: $storylineId
+    globalJs: $globalJs
+    globalCss: $globalCss
+    mainColor: $mainColor
+    secondaryColor: $secondaryColor
+    disableLoader: $disableLoader
+    guidesSettings: $guidesSettings
+  ) {
+    id
+    mainColor
+    secondaryColor
+    disableLoader
+    guidesSettings {
+      ...GuidesSettings
+    }
+  }
+}

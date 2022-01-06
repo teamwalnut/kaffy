@@ -1,0 +1,11 @@
+query Storyline($id: ID) {
+  storyline(id: $id) {
+    flows {
+      name
+      screens {
+        name
+        isUnlinked
+      }
+    }
+  }
+}

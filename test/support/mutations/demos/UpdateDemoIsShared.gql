@@ -1,0 +1,7 @@
+mutation UpdateDemoIsShared($demoId: ID!, $isShared: Boolean!) {
+  updateDemoIsShared(demoId: $demoId, isShared: $isShared) {
+    id
+    name
+    isShared
+  }
+}

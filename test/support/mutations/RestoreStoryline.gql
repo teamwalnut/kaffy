@@ -1,0 +1,8 @@
+mutation RestoreStoryline($storylineId: ID!) {
+  restoreStoryline(storylineId: $storylineId) {
+    id
+    name
+    archivedAt
+    isPublic
+  }
+}

@@ -1,0 +1,8 @@
+fragment ScreenFields on Screen {
+  id
+  screenshot_image_uri
+  last_edited
+  name
+  url
+  s3_object_name
+}

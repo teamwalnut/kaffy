@@ -1,0 +1,9 @@
+query StorylineFlowsMetrics($storylineId: ID!) {
+  storylineFlowsMetrics(storylineId: $storylineId) {
+    flowName
+    uniqueVisitors
+    totalTimeSpent
+    avgScreenCompletion
+    avgTimeSpent
+  }
+}

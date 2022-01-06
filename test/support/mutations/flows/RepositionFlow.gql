@@ -1,0 +1,7 @@
+mutation RepositionFlow($flowId: ID!, $newPosition: Int!) {
+  repositionFlow(flowId: $flowId, newPosition: $newPosition) {
+    id
+    isDefault
+    position
+  }
+}

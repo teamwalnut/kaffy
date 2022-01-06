@@ -1,0 +1,17 @@
+#import "../fragments/GuidesSettings.frag.gql"
+query StorylineWithSettingsSettings($id: ID) {
+  storyline(id: $id) {
+    id
+    settings {
+      id
+      mainColor
+      secondaryColor
+      disableLoader
+      globalCss
+      globalJs
+      guidesSettings {
+        ...GuidesSettings
+      }
+    }
+  }
+}

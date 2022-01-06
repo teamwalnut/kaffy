@@ -1,0 +1,15 @@
+mutation UpdateSmartObjectClass(
+  $smartObjectClassId: ID!
+  $edits: [NewEdit!]
+  $name: String
+  $thumbnail: String
+) {
+  updateSmartObjectClass(
+    smartObjectClassId: $smartObjectClassId
+    name: $name
+    thumbnail: $thumbnail
+    edits: $edits
+  ) {
+    __typename
+  }
+}

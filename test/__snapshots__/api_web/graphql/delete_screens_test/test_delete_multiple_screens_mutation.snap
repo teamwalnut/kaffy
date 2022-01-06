@@ -1,0 +1,9 @@
+{:ok,
+ %{
+   data: %{
+     "deleteScreens" => [
+       %{"id" => "scrubbed", "name" => "some name 0"},
+       %{"id" => "scrubbed", "name" => "some name 1"}
+     ]
+   }
+ }}

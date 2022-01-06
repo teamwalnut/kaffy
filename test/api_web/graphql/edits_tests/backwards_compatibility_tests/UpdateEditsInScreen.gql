@@ -1,0 +1,16 @@
+mutation UpdateEditsInScreen($screenId: ID!, $edits: [UpdatedEdit!]!) {
+  updateEditsInScreen(screenId: $screenId, edits: $edits) {
+    ... on LinkEdit {
+      id
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      linkEditProps {
+        targetScreen {
+          id
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+mutation UpdateEditsInScreen($screenId: ID!, $edits: [UpdatedEdit!]!) {
+  updateEditsInScreen(screenId: $screenId, edits: $edits) {
+    ... on TextEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      textEditProps {
+        originalText
+        text
+      }
+    }
+    ... on StyleEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      styleEditProps {
+        underline
+        bold
+        hide
+        font_size
+        color
+      }
+    }
+    ... on ChangeImageEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      changeImageEditProps {
+        originalImageUrl
+        imageUrl
+      }
+    }
+    ... on LinkEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      linkEditProps {
+        destination {
+          ... on LinkEditScreenDestination {
+            screen {
+              id
+            }
+          }
+        }
+      }
+    }
+    ... on ScrollEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      scrollEditProps {
+        top
+        left
+      }
+    }
+    ... on HtmlEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      htmlEditProps {
+        originalValue
+        value
+      }
+    }
+    ... on BindingEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      bindingEditProps {
+        originalText
+        program
+      }
+    }
+  }
+}

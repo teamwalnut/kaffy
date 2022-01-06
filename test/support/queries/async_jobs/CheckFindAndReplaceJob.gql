@@ -1,0 +1,14 @@
+query CheckFindAndReplaceJobStatus($jobId: ID!) {
+  checkFindAndReplaceJobStatus(jobId: $jobId) {
+    ... on FindAndReplacePending {
+      id
+      queuedAt
+    }
+    ... on FindAndReplaceInProgress {
+      id
+    }
+    ... on FindAndReplaceSuccess {
+      id
+    }
+  }
+}

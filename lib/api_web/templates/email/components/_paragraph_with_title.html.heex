@@ -1,0 +1,7 @@
+<tr>
+  <td style="padding: 30px 60px; font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 24px; color: #292930; font-weight: 300;">
+    <h1 style="margin: 0 0 10px 0; font-family: 'Montserrat', sans-serif; font-size: 24px; line-height: 24px; color: #292930; font-weight: bold;"><%= @title %></h1>
+    <%# the :safe part enables us to use html inside the content %>
+    <p style="margin: 0;"><%= {:safe, @content} %></p>
+  </td>
+</tr>

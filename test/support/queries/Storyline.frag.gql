@@ -1,0 +1,31 @@
+fragment StorylineFields on Storyline {
+  id
+  lastEdited
+  isPublic
+  screensCount
+  collaborators {
+    member {
+      user {
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+  owner {
+    user {
+      firstName
+      lastName
+      email
+    }
+    company_id
+  }
+  flows {
+    name
+    is_default
+    screens {
+      name
+      id
+    }
+  }
+}

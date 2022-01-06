@@ -1,0 +1,10 @@
+mutation BulkInviteMembers($emails: [string!]!, $companyId: ID!, $role: Role) {
+  bulkInviteMembers(emails: $emails, companyId: $companyId, role: $role) {
+    invitesSent {
+      id
+      email
+      role
+    }
+    invitesFailed
+  }
+}

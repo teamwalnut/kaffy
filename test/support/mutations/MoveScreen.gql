@@ -1,0 +1,9 @@
+mutation MoveScreen($screenId: ID!, $targetFlowId: ID!, $newPosition: Int!) {
+  moveScreen(
+    screenId: $screenId
+    targetFlowId: $targetFlowId
+    newPosition: $newPosition
+  ) {
+    id
+  }
+}

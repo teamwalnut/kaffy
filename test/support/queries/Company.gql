@@ -1,0 +1,16 @@
+query Company($id: ID!) {
+  company(id: $id) {
+    patches {
+      id
+      name
+      data {
+        ... on HtmlPatch {
+          html
+          position
+          cssSelector
+          targetUrlGlob
+        }
+      }
+    }
+  }
+}

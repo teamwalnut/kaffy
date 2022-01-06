@@ -1,0 +1,14 @@
+mutation MoveScreens(
+  $screenIds: [ID!]!
+  $targetFlowId: ID!
+  $newPosition: Int!
+) {
+  moveScreens(
+    screenIds: $screenIds
+    targetFlowId: $targetFlowId
+    newPosition: $newPosition
+  ) {
+    id
+    name
+  }
+}

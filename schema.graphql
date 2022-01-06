@@ -1,0 +1,1240 @@
+"Represents a schema"
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+"Demo has several demo versions, only one is active"
+type Demo {
+  id: ID!
+  name: String!
+  lastPlayed: DateTime
+  isShared: Boolean!
+  emailRequired: Boolean!
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  archivedAt: DateTime
+  storyline: Storyline!
+  activeVersion: DemoVersion!
+}
+
+union LinkEditDestination = LinkEditScreenDestination | LinkEditUrlDestination
+
+"""
+A screen is a snapshot of DOM stored on s3 (:s3_object_name) coupled with a screenshot and other
+metadata fields that describe the snapshot.
+"""
+type Screen {
+  id: ID!
+
+  screenshotImageUri: String!
+
+  lastEdited: DateTime!
+
+  name: String!
+
+  url: String!
+
+  originalDimensions: Dimensions
+
+  availableDimensions: [Dimensions!]!
+
+  s3ObjectName: String!
+
+  storyline: Storyline!
+
+  edits: [Edit!]!
+
+  isUnlinked: Boolean!
+
+  "List smart object instances"
+  smartObjectInstances: [SmartObjectInstance!]!
+}
+
+"Demo Version is an instance of storyline"
+type DemoVersion {
+  id: ID!
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: Member!
+  startScreen: Screen!
+  screens: [DemoScreen!]
+  flows: [Flow!]!
+  guides: [Guide!]!
+  patches: [Patch!]
+  settings: DemoVersionSettings!
+  screensCount: Int!
+  hasActiveGuides: Boolean!
+}
+
+type Modal {
+  id: ID!
+  kind: AnnotationKind!
+  message: String!
+  richText: RichText
+  screenId: ID!
+  settings: AnnotationSettings!
+}
+
+"Companies"
+type Company {
+  id: ID!
+  lastUpdated: DateTime
+  name: String!
+  members: [Member!]!
+  memberInvites: [MemberInvite!]!
+  patches: [Patch!]
+  customDomain: CustomDomain
+}
+
+type FindAndReplacePending {
+  id: ID!
+  queuedAt: DateTime!
+}
+
+"Storylines"
+type Storyline {
+  id: ID!
+
+  lastEdited: DateTime!
+
+  insertedAt: DateTime!
+
+  isPublic: Boolean!
+
+  isShared: Boolean!
+
+  name: String!
+
+  owner: Member!
+
+  screensCount: Int!
+
+  startScreen: Screen
+
+  settings: CascadedStorylineSettings!
+
+  archivedAt: DateTime
+
+  demoFlags: DemoFlags
+
+  collaborators: [Collaborator!]!
+
+  patches: [Patch!]
+
+  screens: [Screen!]
+
+  flows: [Flow!]!
+
+  guides: [Guide!]!
+
+  demos: [Demo!]
+
+  "Lists smart object classes"
+  smartObjectClasses: [SmartObjectClass!]!
+}
+
+enum AnnotationSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+"A member invitation to a company"
+type MemberInvite {
+  id: ID!
+  company: Company!
+  member: Member
+  email: String!
+  role: Role!
+  expiresAt: DateTime!
+}
+
+enum AnnotationKind {
+  POINT
+  MODAL
+}
+
+enum EditKind {
+  "Text edit"
+  TEXT
+
+  "Style edit"
+  STYLE
+
+  "Html edit"
+  HTML
+
+  "Changing an image edit"
+  CHANGE_IMAGE
+
+  "Link edit"
+  LINK
+
+  "Scroll edit"
+  SCROLL
+
+  "A dynamically bound value"
+  BINDING
+}
+
+input NewChangeImageEdit {
+  originalImageUrl: String!
+  imageUrl: String!
+}
+
+input FabSettingsInput {
+  enabled: Boolean
+  position: FabPosition
+  text: String
+  targetUrl: String
+}
+
+input NewScrollEdit {
+  top: Float!
+  left: Float!
+}
+
+type HtmlEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  htmlEditProps: HtmlEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+input DomSelectorInput {
+  xpathNode: String
+  xpathFrames: [String!]
+}
+
+type ChangeImageEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  changeImageEditProps: ChangeImageEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+input UserAcceptInviteProps {
+  firstName: String!
+  lastName: String!
+  password: String!
+  passwordConfirmation: String!
+}
+
+type TextEditProps {
+  originalText: String!
+  text: String!
+}
+
+input NewStyleEditProps {
+  underline: Boolean
+  bold: Boolean
+  hide: Boolean
+  fontSize: String
+  color: String
+}
+
+type FabSettings {
+  enabled: Boolean!
+  position: FabPosition
+  text: String
+  targetUrl: String
+}
+
+"The unified interface between cascaded storyline settings and demo settings"
+interface Settings {
+  id: ID!
+  globalJs: String
+  globalCss: String
+  mainColor: String!
+  secondaryColor: String!
+  disableLoader: Boolean!
+  guidesSettings: GuidesSettings!
+}
+
+"The uncascaded settings of a storyline"
+type StorylineSettings {
+  id: ID!
+  globalJs: String
+  globalCss: String
+  mainColor: String
+  secondaryColor: String
+  disableLoader: Boolean
+  guidesSettings: StorylineGuidesSettings!
+}
+
+type BindingEditProps {
+  originalText: String!
+  program: String!
+}
+
+type StyleEditProps {
+  underline: Boolean
+  bold: Boolean
+  hide: Boolean
+  fontSize: String
+  color: String
+}
+
+type LinkEditProps {
+  targetScreenId: ID
+  targetScreen: Screen
+  destination: LinkEditDestination!
+}
+
+"Default settings for the company"
+type CompanySettings {
+  id: ID!
+  mainColor: String!
+  secondaryColor: String!
+  disableLoader: Boolean!
+  guidesSettings: GuidesSettings!
+}
+
+"A selector used to find things in the DOM"
+type DomSelector {
+  "The XPath representation of a DOM Selector"
+  xpathNode: String!
+
+  xpathFrames: [String!]!
+}
+
+"""
+A screen is a snapshot of DOM stored on s3 (:s3_object_name) coupled with a screenshot and other
+metadata fields that describe the snapshot.
+"""
+type DemoScreen {
+  id: ID!
+  screenshotImageUri: String!
+  lastEdited: DateTime!
+  name: String!
+  url: String!
+  originalDimensions: Dimensions
+  availableDimensions: [Dimensions!]!
+  s3ObjectName: String!
+  edits: [Edit!]!
+  smartObjectInstances: [SmartObjectInstance!]!
+}
+
+type LinkEditUrlDestination {
+  href: String!
+  target: LinkEditUrlDestinationTarget
+}
+
+"Custom Domain"
+type CustomDomain {
+  domain: String
+}
+
+enum FabPosition {
+  TOP_LEFT
+  TOP_RIGHT
+  BOTTOM_RIGHT
+  BOTTOM_LEFT
+}
+
+enum HtmlPatchPosition {
+  APPEND_CHILD
+  APPEND_SCRIPT_TAG
+}
+
+enum LogLevel {
+  "Emergency log level"
+  EMERGENCY
+
+  "Alert log level"
+  ALERT
+
+  "Critical log level"
+  CRITICAL
+
+  "Error log level"
+  ERROR
+
+  "Warning log level"
+  WARNING
+
+  "Notice log level"
+  NOTICE
+
+  "Info log level"
+  INFO
+
+  "Debug log level"
+  DEBUG
+}
+
+"Responsible for organizing a group of screens for a storyline."
+type Flow {
+  id: ID!
+  name: String!
+  isDefault: Boolean!
+  position: Int!
+  screens: [Screen!]!
+}
+
+"Variables used to customize demo"
+type Variable {
+  id: ID!
+  name: String!
+  description: String!
+  defaultValue: String!
+  kind: Kind!
+}
+
+input NewSmartObjectInstance {
+  classId: ID!
+  editsOverrides: [NewEdit!]
+  overrideCssSelector: String
+  overrideFrameSelectors: [String!]
+  overrideDomSelector: DomSelectorInput
+}
+
+"A guide is a collection of annotations ordered linearly per a Storyline."
+type Guide {
+  id: ID!
+  name: String!
+  priority: Int!
+  annotations: [Annotation!]!
+}
+
+enum DimStyle {
+  SOFT
+  MEDIUM
+  DARK
+}
+
+enum Role {
+  COMPANY_ADMIN
+  EDITOR
+  PRESENTER
+  VIEWER
+}
+
+input NewUrlLinkEdit {
+  href: String!
+  target: LinkEditUrlDestinationTarget
+}
+
+input UpdatedEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  styleEditProps: NewStyleEditProps
+  textEditProps: NewTextEditProps
+  htmlEditProps: NewHtmlEditProps
+  changeImageEditProps: NewChangeImageEdit
+  linkEditProps: NewLinkEdit
+  scrollEditProps: NewScrollEdit
+  bindingEditProps: NewBindingEditProps
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelectorInput
+}
+
+input DimensionsInput {
+  width: Int!
+  height: Int!
+  docHeight: Int
+  docWidth: Int
+}
+
+type StorylineChart {
+  name: String!
+  src: String!
+}
+
+type ScrollEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  scrollEditProps: ScrollEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+input VariableInput {
+  id: String!
+  name: String!
+  value: String!
+}
+
+type BulkInvitationResult {
+  invitesSent: [MemberInvite!]
+  invitesFailed: [String!]
+}
+
+"FeaturesFlags of the current_user"
+type FeaturesFlags {
+  richerGuides: Boolean
+  smartObjects: Boolean
+  storylineHierarchy: Boolean
+  autoLink: Boolean
+  bindings: Boolean
+  delayLink: Boolean
+  engagement: Boolean
+  linkUrl: Boolean
+  multipleResolutions: Boolean
+  offlineDemosPoc: Boolean
+  logLevel: LogLevel
+  bounceRate: Boolean
+  showComplianceModal: Boolean
+  newGuidesUx: Boolean
+  editorSidebarSettings: Boolean
+  additionalSidebarSettings: Boolean
+  bulkActions: Boolean
+  demoControls: Boolean
+  helpCenter: Boolean
+  accountGlobalSettings: Boolean
+  rolesAndPermissions: Boolean
+  additionalGuidesSettings: Boolean
+  guidesFpp: Boolean
+  additionalToken: Boolean
+  annotationSettings: Boolean
+  asyncFindAndReplaceJob: Boolean
+  multipleCta: Boolean
+}
+
+type StorylineFabSettings {
+  enabled: Boolean
+  position: FabPosition
+  text: String
+  targetUrl: String
+}
+
+type StorylineMetrics {
+  storylineUuid: String!
+  storylineName: String!
+  totalVisits: Int!
+  uniqueVisitors: Int!
+  avgScreenCompletion: Float!
+  totalTimeSpent: String!
+  avgTimeSpent: String!
+  totalHoursSpent: Float!
+  avgHoursSpent: Float!
+  bounces: Int!
+}
+
+type SmartObjectClass {
+  id: ID!
+  storylineId: ID!
+  name: String!
+  thumbnail: String
+  edits: [Edit!]!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+type DemoFlags {
+  """
+  Flag determining if we need to adjust the screen according to its original width/height.
+  Only relevant when the system does responsiveness calculations in JS instead of CSS
+  """
+  adjustToOriginDimensions: Boolean
+}
+
+type FindAndReplaceInProgress {
+  id: ID!
+}
+
+type Dimensions {
+  width: Int!
+  height: Int!
+  docHeight: Int
+  docWidth: Int
+}
+
+"The settings of a demo"
+type DemoVersionSettings implements Settings {
+  id: ID!
+  globalJs: String
+  globalCss: String
+  mainColor: String!
+  secondaryColor: String!
+  disableLoader: Boolean!
+  guidesSettings: GuidesSettings!
+}
+
+enum Anchor {
+  TOP
+  TOP_START
+  TOP_END
+  RIGHT
+  BOTTOM
+  BOTTOM_START
+  BOTTOM_END
+  LEFT
+  AUTO
+}
+
+type RootMutationType {
+  "Invites many emails to a company"
+  bulkInviteMembers(emails: [String!]!, companyId: ID!, role: Role): BulkInvitationResult!
+
+  "Invites a member to a company"
+  inviteMember(email: String!, role: Role): MemberInvite!
+
+  "Accepts a member invitation to a company"
+  acceptMemberInvitation(token: String!, userAttributes: UserAcceptInviteProps!): Member!
+
+  "Delete a member invitation to a company"
+  deleteMemberInvitation(memberInviteId: ID!): MemberInvite!
+
+  "Deletes a member from a company"
+  deleteMember(memberId: ID!): Member!
+
+  "Update Member Role"
+  updateMemberRole(memberId: ID!, role: Role!): Member!
+
+  "Adds collaborator to a storyline"
+  addCollaboratorToStoryline(storylineId: ID!, memberId: ID!): Collaborator!
+
+  "Removes collaborator from a storyline"
+  removeCollaboratorFromStoryline(storylineId: ID!, memberId: ID!): Boolean!
+
+  "Add screen to storyline"
+  addScreenToStoryline(
+    storylineId: ID!, screenshotImageUri: String!, name: String!, url: String!, originalDimensions: DimensionsInput, availableDimensions: [DimensionsInput], assetManifest: AssetManifestInput, s3ObjectName: String!
+  ): Screen
+
+  "updates the screen name"
+  updateScreenName(id: ID!, name: String!): Screen!
+
+  "Deletes a screen"
+  deleteScreen(id: ID!): Screen!
+
+  "Delete screens"
+  deleteScreens(storylineId: ID!, screenIds: [ID!]!): [Screen!]!
+
+  "Creates a new storyline"
+  createStoryline: Storyline!
+
+  "Sets a screen as start screen"
+  updateStoryline(storylineId: ID!, startScreenId: ID, isPublic: Boolean, isShared: Boolean, name: String): Storyline!
+
+  "Archives a storyline, removing all associated collaborators. Archived storylines can later on be restored"
+  archiveStoryline(storylineId: ID!): Storyline!
+
+  "Restores a storyline from the archive, this takes into account its previous visibility"
+  restoreStoryline(storylineId: ID!): Storyline!
+
+  "Moves a screen to the new_position in the passed target_flow_id"
+  moveScreen(screenId: ID!, targetFlowId: ID!, newPosition: Int!): Screen!
+
+  "Moves screens to the new position in the passed target_flow_id"
+  moveScreens(screenIds: [ID]!, targetFlowId: ID!, newPosition: Int!): [Screen]!
+
+  "Copies a storyline inside the same company while making it private and removing collaborators"
+  copyStoryline(storylineId: ID!, targetOwnerId: ID): Storyline!
+
+  "Copies a screen to a given storyline"
+  copyScreen(screenId: ID!, storylineId: ID!): Screen!
+
+  copyScreens(screenIds: [ID!]!, storylineId: ID!): [Screen!]!
+
+  "Adds new edits to a screen"
+  addEditsToScreen(screenId: ID!, edits: [NewEdit!]!): [Edit!]!
+
+  "Updates an existing edit"
+  updateEditsInScreen(screenId: ID!, edits: [UpdatedEdit!]!): [Edit!]!
+
+  "Deletes all provided edits"
+  deleteEditsInScreen(screenId: ID!, edits: [DeleteEdit!]!): Boolean
+
+  "Create a flow for a storyline"
+  createFlow(storylineId: ID!, name: String!): Flow!
+
+  "Renames a flow"
+  renameFlow(flowId: ID!, name: String!): Flow!
+
+  "Deletes a flow and moves all of its screens to the default flow of the same storyline"
+  deleteFlow(flowId: ID!): Flow!
+
+  "Reposition a flow"
+  repositionFlow(flowId: ID!, newPosition: Int!): [Flow]!
+
+  "Adds new Smart Object class"
+  addSmartObjectClass(storylineId: ID!, smartObjectClass: NewSmartObjectClass!): SmartObjectClass!
+
+  "Update Smart Object class"
+  updateSmartObjectClass(smartObjectClassId: ID!, name: String, thumbnail: String, edits: [NewEdit!]): SmartObjectClass!
+
+  "Archive Smart Object class"
+  archiveSmartObjectClass(smartObjectClassId: ID!): SmartObjectClass!
+
+  "Rename Smart Object class"
+  renameSmartObjectClass(smartObjectClassId: ID!, name: String!): SmartObjectClass!
+
+  "Detach a Smart Object Instance"
+  detachSmartObjectInstance(screenId: ID!, instanceId: ID!): [SmartObjectInstance!]!
+
+  "Updates the set of Smart Object instances in a screen"
+  updateSmartObjectInstancesInScreen(screenId: ID!, instances: [NewSmartObjectInstance!]!): [SmartObjectInstance!]!
+
+  "Adds a modal annotation to guide"
+  addModalAnnotationToGuide(
+    guideId: ID!, message: String, richTextAsJson: String, hasOverlay: Boolean, screenId: ID!, step: Int, settings: AnnotationSettingsInput
+  ): Modal
+
+  "Adds a point annotation to guide"
+  addPointAnnotationToGuide(
+    guideId: ID!, message: String, richTextAsJson: String, screenId: ID!, cssSelector: String!, frameSelectors: [String!], anchor: Anchor!, hasOverlay: Boolean, step: Int, settings: AnnotationSettingsInput
+  ): Point
+
+  "Updates an annotation"
+  updateAnnotation(
+    id: ID!, kind: AnnotationKind, message: String, richTextAsJson: String, screenId: ID, cssSelector: String, frameSelectors: [String!], anchor: Anchor, hasOverlay: Boolean, settings: AnnotationSettingsInput
+  ): Annotation!
+
+  "Deletes an annotation"
+  deleteAnnotation(id: ID!): Annotation!
+
+  "Repositions an annotation"
+  repositionAnnotation(id: ID!, step: Int!): Annotation!
+
+  "Creates a guide for a storyline"
+  createGuide(storylineId: ID!, name: String!): Guide!
+
+  "Deletes a guide"
+  deleteGuide(id: ID!): Guide!
+
+  "Renames a guide"
+  renameGuide(id: ID!, name: String!): Guide!
+
+  "Repositions a guide"
+  repositionGuide(id: ID!, newPriority: Int!): Guide!
+
+  "Create a demo from storyline"
+  createDemo(storylineId: ID!, name: String!, variables: [VariableInput]): Demo!
+
+  "Update a version for demo"
+  updateDemoVersion(storylineId: ID!, demoId: ID!, variables: [VariableInput]): Demo!
+
+  "Rename demo"
+  renameDemo(demoId: ID!, name: String!): Demo!
+
+  "Archive demo"
+  archiveDemo(demoId: ID!): Demo!
+
+  "Restore demo"
+  restoreDemo(demoId: ID!): Demo!
+
+  "Update demo is shared"
+  updateDemoIsShared(demoId: ID!, isShared: Boolean!): Demo!
+
+  "Update demo gate properties"
+  updateDemoGate(demoId: ID!, isEmailRequired: Boolean!): Demo!
+
+  "Update demo last played"
+  updateDemoLastPlayed(demoId: ID!): Demo!
+
+  "Adds html patch to a storyline"
+  addHtmlPatchToStoryline(storylineId: ID!, name: String!, htmlPatch: HtmlPatchInputObject!): Patch!
+
+  "Adds a patch to a company"
+  addHtmlPatchToCompany(companyId: ID!, name: String!, htmlPatch: HtmlPatchInputObject!): Patch!
+
+  "Updates a patch"
+  updateHtmlPatch(patchId: ID!, htmlPatchData: HtmlPatchInputObject!): Patch!
+
+  "Remove a patch"
+  removePatch(patchId: ID!): Patch!
+
+  "Update settings of storyline"
+  updateStorylineSettings(
+    storylineId: ID!, globalJs: String, globalCss: String, mainColor: String, secondaryColor: String, disableLoader: Boolean, guidesSettings: GuidesSettingsInput
+  ): CascadedStorylineSettings!
+
+  updateCompanySettings(
+    mainColor: String, secondaryColor: String, disableLoader: Boolean, guidesSettings: GuidesSettingsInput
+  ): CompanySettings!
+
+  "Update user's compliance"
+  approveTac: Compliance!
+
+  "Start find and replace job"
+  startFindAndReplaceJob(storylineId: ID!, from: String!, to: String!): FindAndReplaceJobDescriptor!
+
+  "Create\/update a variable from storyline"
+  createOrUpdateVariable(storylineId: ID!, name: String!, description: String!, kind: Kind!, defaultValue: String!): Variable!
+}
+
+type RootQueryType {
+  "Get compliance object that holds the user approval of our Terms and conditions and privacy policy"
+  compliance: Compliance!
+
+  "Lists storyline metrics"
+  storylineMetrics(storylineId: ID!, from: Float): [StorylineMetrics!]
+
+  "Lists storyline flows metrics"
+  storylineFlowsMetrics(storylineId: ID!, from: Float): [FlowMetrics!]
+
+  "Lists storyline activity"
+  storylineActivity(storylineId: ID!, from: Float): [StorylineActivity!]
+
+  "Lists storyline metrics"
+  storylineCharts(storylineId: ID!, from: Float): [StorylineChart!]
+
+  "Get the uncascaded settings of a storyline"
+  storylineSettings(storylineId: ID!): StorylineSettings
+
+  "Get the default settings for the company"
+  companySettings: CompanySettings
+
+  "Lists demos metrics"
+  memberDemosMetrics(from: Float): [DemoMetrics!]
+
+  featuresFlags: FeaturesFlags
+
+  currentUser: User
+
+  currentCompany: Company!
+
+  company(id: ID!): Company
+
+  "Lists Storylines by visibility"
+  storylines(visibility: StorylineVisibility, isArchived: Boolean): [Storyline!]!
+
+  "Gets a specific screen by storyline_id and screen_id"
+  screen(storylineId: ID!, screenId: ID!): Screen
+
+  "Returns a single storyline by ID"
+  storyline(id: ID): Storyline
+
+  demo(id: ID!): Demo
+
+  "Lists all demos by user"
+  demos(storylineId: ID!, isArchived: Boolean): [Demo!]!
+
+  "Lists storyline demos"
+  allDemos(isArchived: Boolean): [Demo!]!
+
+  "Generates a demo access token"
+  generateDemoToken(storylineId: ID!): String
+
+  authorize(resource: Resource!, id: ID, relationship: AuthorizationRelationship!): Boolean!
+
+  authorizeMany(resource: Resource!, ids: [ID], relationship: AuthorizationRelationship!): [Boolean!]!
+
+  "Check find and replace job"
+  checkFindAndReplaceJobStatus(jobId: ID!): FindAndReplaceJobDescriptor!
+
+  "Lists variables of a storyline"
+  variables(storylineId: ID!): [Variable!]!
+}
+
+type HtmlPatch {
+  position: HtmlPatchPosition!
+  cssSelector: String!
+  html: String!
+  targetUrlGlob: String
+}
+
+"This is the wrapper object, only use this for low-level operations, we might remove it later on"
+type Patch {
+  id: ID!
+  name: String!
+  data: PatchData!
+}
+
+type Compliance {
+  isTacApproved: Boolean!
+}
+
+type SmartObjectInstance {
+  id: ID!
+  classId: ID!
+  screenId: ID!
+  storylineId: ID!
+  edits: [Edit!]!
+  editsOverrides: [Edit!]!
+  detached: Boolean!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+"""
+The `DateTime` scalar type represents a date and time in the UTC
+timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+string, including UTC timezone ("Z"). The parsed date and time string will
+be converted to UTC if there is an offset.
+"""
+scalar DateTime
+
+enum Resource {
+  STORYLINE
+}
+
+input AssetManifestInput {
+  asJson: String!
+}
+
+input NewLinkEdit {
+  targetScreenId: ID
+  toScreen: NewScreenLinkEdit
+  toUrl: NewUrlLinkEdit
+}
+
+input AnnotationSettingsInput {
+  showMainButton: Boolean
+  mainButtonText: String
+  showDismissButton: Boolean
+  showBackButton: Boolean
+  showAvatar: Boolean
+  avatarUrl: String
+  avatarTitle: String
+  showDim: Boolean
+  size: AnnotationSize
+}
+
+type Point {
+  id: ID!
+  kind: AnnotationKind!
+  message: String!
+  richText: RichText
+  screenId: ID!
+  cssSelector: String!
+  frameSelectors: [String!]
+  anchor: Anchor!
+  settings: AnnotationSettings!
+}
+
+"The uncascaded settings for the guides of storylines"
+type StorylineGuidesSettings {
+  showGlow: Boolean
+  glowColor: String
+  backgroundColor: String
+  fontColor: String
+  fontSize: Int
+  accentColor: String
+  smoothScrolling: Boolean
+  hideDismiss: Boolean
+  showDismissButton: Boolean
+  showBackButton: Boolean
+  showMainButton: Boolean
+  mainButtonText: String
+  dimByDefault: Boolean
+  dimStyle: DimStyle
+  celebrateGuidesCompletion: Boolean
+  showAvatar: Boolean
+  avatarUrl: String
+  avatarTitle: String
+  fab: StorylineFabSettings!
+}
+
+"The cascaded settings of a storyline"
+type CascadedStorylineSettings implements Settings {
+  id: ID!
+  globalJs: String
+  globalCss: String
+  mainColor: String!
+  secondaryColor: String!
+  disableLoader: Boolean!
+  guidesSettings: GuidesSettings!
+}
+
+"The settings of an annotation"
+type AnnotationSettings {
+  showMainButton: Boolean
+  mainButtonText: String
+  showDismissButton: Boolean
+  showBackButton: Boolean
+  showAvatar: Boolean
+  avatarUrl: String
+  avatarTitle: String
+  showDim: Boolean
+  size: AnnotationSize
+}
+
+input NewHtmlEditProps {
+  value: String!
+  originalValue: String!
+}
+
+type FindAndReplaceSuccess {
+  id: ID!
+}
+
+input NewSmartObjectClass {
+  name: String!
+  thumbnail: String!
+  edits: [NewEdit!]!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelectorInput
+}
+
+type ScrollEditProps {
+  top: Float!
+  left: Float!
+}
+
+union FindAndReplaceJobDescriptor = FindAndReplacePending | FindAndReplaceInProgress | FindAndReplaceSuccess
+
+type Collaborator {
+  member: Member!
+  storyline: Storyline!
+}
+
+enum AuthorizationRelationship {
+  VIEWER
+  EDITOR
+  CREATOR
+}
+
+type LinkEditScreenDestination {
+  id: ID!
+  screen: Screen!
+  delayMs: Int
+}
+
+"""
+An annotation is a piece of information anchored to an element in a screen - point annotation,
+or the whole screen - modal annotation.
+"""
+type Annotation {
+  id: ID!
+  kind: AnnotationKind!
+  message: String!
+  richText: RichText
+  screenId: ID!
+  cssSelector: String
+  frameSelectors: [String!]
+  step: Int!
+  anchor: Anchor
+  hasOverlay: Boolean!
+  settings: AnnotationSettings!
+}
+
+type StorylineActivity {
+  id: String!
+  timestamp: String!
+  action: String!
+  userId: String
+  storylineUuid: String!
+  storylineName: String!
+  demoUuid: String!
+  demoName: String!
+  demoGateProvidedEmail: String
+}
+
+"Storyline visibility, used for filtering"
+enum StorylineVisibility {
+  "All storylines, except archived"
+  ALL
+
+  "Private Storylines - e.g Storylines that were not set to public"
+  PRIVATE
+
+  "Public Storylines - Public Storylines are accessible to everyone in your Company"
+  PUBLIC
+}
+
+type TextEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  textEditProps: TextEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+input DeleteEdit {
+  id: ID!
+}
+
+enum Kind {
+  "Text variable"
+  TEXT
+
+  "Image variable"
+  IMAGE
+}
+
+enum LinkEditUrlDestinationTarget {
+  NEW_TAB
+  SAME_TAB
+}
+
+input NewScreenLinkEdit {
+  id: ID!
+  delayMs: Int
+}
+
+input NewEdit {
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  styleEditProps: NewStyleEditProps
+  textEditProps: NewTextEditProps
+  htmlEditProps: NewHtmlEditProps
+  changeImageEditProps: NewChangeImageEdit
+  linkEditProps: NewLinkEdit
+  scrollEditProps: NewScrollEdit
+  bindingEditProps: NewBindingEditProps
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelectorInput
+}
+
+input GuidesSettingsInput {
+  showGlow: Boolean
+  glowColor: String
+  backgroundColor: String
+  fontColor: String
+  fontSize: Int
+  accentColor: String
+  smoothScrolling: Boolean
+  showDismissButton: Boolean
+  showBackButton: Boolean
+  showMainButton: Boolean
+  mainButtonText: String
+  dimByDefault: Boolean
+  dimStyle: DimStyle
+  celebrateGuidesCompletion: Boolean
+  showAvatar: Boolean
+  avatarUrl: String
+  avatarTitle: String
+  fab: FabSettingsInput
+}
+
+type RichText {
+  asJson: String
+}
+
+union Edit = TextEdit | StyleEdit | HtmlEdit | ChangeImageEdit | LinkEdit | ScrollEdit | BindingEdit
+
+type BindingEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  bindingEditProps: BindingEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+type StyleEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  styleEditProps: StyleEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+type LinkEdit {
+  id: ID!
+  kind: EditKind!
+  lastEditedAt: DateTime!
+  linkEditProps: LinkEditProps!
+  cssSelector: String!
+  frameSelectors: [String!]
+  domSelector: DomSelector
+}
+
+input HtmlPatchInputObject {
+  position: HtmlPatchPosition!
+  cssSelector: String!
+  html: String!
+  targetUrlGlob: String
+}
+
+"The settings for the guides"
+type GuidesSettings {
+  showGlow: Boolean!
+  glowColor: String!
+  backgroundColor: String!
+  fontColor: String!
+  fontSize: Int!
+  accentColor: String!
+  smoothScrolling: Boolean!
+  hideDismiss: Boolean!
+  showDismissButton: Boolean!
+  showBackButton: Boolean!
+  showMainButton: Boolean!
+  mainButtonText: String!
+  dimByDefault: Boolean!
+  dimStyle: DimStyle!
+  celebrateGuidesCompletion: Boolean!
+  showAvatar: Boolean!
+  avatarUrl: String
+  avatarTitle: String
+  fab: FabSettings!
+}
+
+type DemoMetrics {
+  storylineUuid: ID!
+  storylineName: String!
+  uuid: ID!
+  name: String!
+  started: Int!
+  bounced: Int!
+  totalVisits: Int!
+  uniqueVisitors: Int!
+  avgScreenCompletion: Float!
+  avgTimeSpent: String!
+  avgTimeSpentMilliseconds: Float!
+}
+
+type FlowMetrics {
+  flowName: String!
+  uniqueVisitors: Int!
+  avgScreenCompletion: Float!
+  totalTimeSpent: String!
+  avgTimeSpent: String!
+  totalHoursSpent: Float!
+  avgHoursSpent: Float!
+}
+
+input NewTextEditProps {
+  originalText: String!
+  text: String!
+}
+
+type HtmlEditProps {
+  value: String!
+  originalValue: String!
+}
+
+input NewBindingEditProps {
+  originalText: String!
+  program: String!
+}
+
+type ChangeImageEditProps {
+  originalImageUrl: String!
+  imageUrl: String!
+}
+
+"A member of a company, its a type that connects between a user and a company"
+type Member {
+  id: ID!
+  company: Company!
+  companyId: ID!
+  role: Role
+  user: User!
+}
+
+"A user of Walnut"
+type User {
+  email: String!
+  firstName: String!
+  lastName: String!
+  isAdmin: Boolean!
+  confirmedAt: String
+  members: [Member!]
+  companies: [Company!]
+}
+
+union PatchData = HtmlPatch

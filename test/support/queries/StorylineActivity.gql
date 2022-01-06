@@ -1,0 +1,12 @@
+query StorylineActivity($storylineId: ID!) {
+  storylineActivity(storylineId: $storylineId) {
+    id
+    timestamp
+    action
+    userId
+    demoName
+    demoUuid
+    storylineName
+    storylineUuid
+  }
+}

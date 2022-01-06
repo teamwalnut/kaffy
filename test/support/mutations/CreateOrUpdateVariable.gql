@@ -1,0 +1,18 @@
+mutation CreateOrUpdateVariable(
+  $storylineId: ID!
+  $name: string!
+  $description: string!
+  $defaultValue: string!
+  $kind: kind!
+) {
+  createOrUpdateVariable(
+    storylineId: $storylineId
+    name: $name
+    description: $description
+    defaultValue: $defaultValue
+    kind: $kind
+  ) {
+    id
+    name
+  }
+}

@@ -1,0 +1,5 @@
+mutation DetachSmartObjectInstance($screenId: ID!, $instanceId: ID!) {
+  detachSmartObjectInstance(screenId: $screenId, instanceId: $instanceId) {
+    __typename
+  }
+}

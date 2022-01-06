@@ -1,0 +1,11 @@
+#import "./Demo.frag.gql"
+#import "./DemoVersion.frag.gql"
+
+query Demo($id: ID!) {
+  demo(id: $id) {
+    ...DemoFields
+    activeVersion {
+      ...DemoVersionFields
+    }
+  }
+}

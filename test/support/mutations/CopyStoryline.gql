@@ -1,0 +1,57 @@
+mutation CopyStoryline($storylineId: ID!, $targetOwnerId: ID) {
+  copyStoryline(storylineId: $storylineId, targetOwnerId: $targetOwnerId) {
+    id
+    name
+    owner {
+      id
+    }
+    screens {
+      id
+      name
+      edits {
+        ... on LinkEdit {
+          id
+          frameSelectors
+          cssSelector
+          kind
+          linkEditProps {
+            targetScreen {
+              id
+            }
+          }
+        }
+      }
+      smartObjectInstances {
+        id
+        classId
+        screenId
+        storylineId
+        cssSelector
+        frameSelectors
+        edits {
+          ... on LinkEdit {
+            id
+            frameSelectors
+            cssSelector
+            kind
+            lastEditedAt
+            linkEditProps {
+              targetScreen {
+                id
+              }
+              destination {
+                ... on LinkEditScreenDestination {
+                  id
+                  screen {
+                    id
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

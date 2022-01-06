@@ -1,0 +1,17 @@
+{:ok,
+ %{
+   data: %{
+     "storyline" => %{
+       "flows" => [
+         %{
+           "name" => "Default",
+           "screens" => [
+             %{"isUnlinked" => true, "name" => "some name 0"},
+             %{"isUnlinked" => false, "name" => "some name 1"},
+             %{"isUnlinked" => true, "name" => "some name 2"}
+           ]
+         }
+       ]
+     }
+   }
+ }}

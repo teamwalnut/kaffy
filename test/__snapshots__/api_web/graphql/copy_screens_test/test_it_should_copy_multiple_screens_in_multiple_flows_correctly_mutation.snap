@@ -1,0 +1,17 @@
+{:ok,
+ %{
+   data: %{
+     "copyScreens" => [
+       %{
+         "id" => "scrubbed",
+         "lastEdited" => "scrubbed",
+         "name" => "Copy of screen to be copied"
+       },
+       %{
+         "id" => "scrubbed",
+         "lastEdited" => "scrubbed",
+         "name" => "Copy of screen to be copied in flow"
+       }
+     ]
+   }
+ }}

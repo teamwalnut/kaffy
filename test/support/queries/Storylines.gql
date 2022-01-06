@@ -1,0 +1,45 @@
+query Storylines($visibility: StorylineVisibility, $isArchived: Boolean) {
+  storylines(visibility: $visibility, isArchived: $isArchived) {
+    id
+    isPublic
+    screensCount
+    archivedAt
+    collaborators {
+      member {
+        user {
+          firstName
+          lastName
+          email
+        }
+      }
+    }
+    owner {
+      user {
+        firstName
+        lastName
+        email
+      }
+      company_id
+    }
+    flows {
+      id
+      name
+      is_default
+      position
+      screens {
+        name
+        id
+      }
+    }
+    patches {
+      data {
+        ... on HtmlPatch {
+          html
+          position
+          cssSelector
+          targetUrlGlob
+        }
+      }
+    }
+  }
+}

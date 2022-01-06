@@ -1,0 +1,5 @@
+mutation ArchiveSmartObjectClass($smartObjectClass: ID!) {
+  archiveSmartObjectClass(smartObjectClassId: $smartObjectClass) {
+    id
+  }
+}

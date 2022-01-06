@@ -1,0 +1,57 @@
+{:ok,
+ %{
+   data: %{
+     "storyline" => %{
+       "flows" => [
+         %{
+           "is_default" => true,
+           "name" => "Default",
+           "screens" => [
+             %{"id" => "scrubbed", "name" => "screen before copied screen"},
+             %{"id" => "scrubbed", "name" => "screen to be copied"},
+             %{"id" => "scrubbed", "name" => "Copy of screen to be copied"},
+             %{"id" => "scrubbed", "name" => "screen after copied screen"}
+           ]
+         },
+         %{
+           "is_default" => false,
+           "name" => "flow_0",
+           "screens" => [
+             %{
+               "id" => "scrubbed",
+               "name" => "screen before copied screen in flow"
+             },
+             %{"id" => "scrubbed", "name" => "screen to be copied in flow"},
+             %{
+               "id" => "scrubbed",
+               "name" => "Copy of screen to be copied in flow"
+             },
+             %{
+               "id" => "scrubbed",
+               "name" => "screen after copied screen in flow"
+             }
+           ]
+         }
+       ],
+       "guides" => [],
+       "id" => "scrubbed",
+       "lastEdited" => "scrubbed",
+       "name" => "storyline_0",
+       "screens" => [
+         %{"id" => "scrubbed", "name" => "screen before copied screen"},
+         %{"id" => "scrubbed", "name" => "screen to be copied"},
+         %{"id" => "scrubbed", "name" => "screen after copied screen"},
+         %{"id" => "scrubbed", "name" => "screen before copied screen in flow"},
+         %{"id" => "scrubbed", "name" => "screen to be copied in flow"},
+         %{"id" => "scrubbed", "name" => "screen after copied screen in flow"},
+         %{"id" => "scrubbed", "name" => "Copy of screen to be copied"},
+         %{"id" => "scrubbed", "name" => "Copy of screen to be copied in flow"}
+       ],
+       "screensCount" => 8,
+       "startScreen" => %{
+         "id" => "scrubbed",
+         "name" => "screen before copied screen"
+       }
+     }
+   }
+ }}

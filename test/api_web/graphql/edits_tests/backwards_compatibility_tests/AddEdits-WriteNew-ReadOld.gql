@@ -1,0 +1,31 @@
+mutation AddEdits($screenId: ID!) {
+  addEditsToScreen(
+    screenId: $screenId
+    edits: [
+      {
+        frameSelectors: ["iframe"]
+        cssSelector: "i.css.like"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: LINK
+        linkEditProps: { toScreen: { id: $screenId, delayMs: 1000 } }
+      }
+    ]
+  ) {
+    ... on LinkEdit {
+      id
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      frameSelectors
+      cssSelector
+      kind
+      lastEditedAt
+      linkEditProps {
+        targetScreen {
+          id
+        }
+      }
+    }
+  }
+}

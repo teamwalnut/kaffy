@@ -1,0 +1,26 @@
+{
+  "skip_files": [
+    "test/support/channel_case.ex",
+    "test/support/conn_case.ex",
+    "test/support/graphql_case.ex",
+    "test/support/fixtures/",
+    "test/support/graphql/fixtures/",
+    "lib/api_web.ex",
+    "lib/api/release.ex",
+    "lib/mix/tasks/*",
+    "lib/api/kaffy/",
+    "lib/api/metabase.ex",
+    "lib/api_web/plugs/slow_resp.ex",
+    "lib/api/sentry/sentry_event_filter.ex",
+    "lib/api/helpers/ex_aws_http_client.ex",
+    "lib/api/s3.ex",
+    "lib/api/asset_manifests/*",
+    "lib/api_web/telemetry.ex"
+  ],
+  "coverage_options": {
+    "treat_no_relevant_lines_as_covered": true,
+    "output_dir": "cover/",
+    "minimum_coverage": 93.5
+  },
+  "print_summary": false
+}

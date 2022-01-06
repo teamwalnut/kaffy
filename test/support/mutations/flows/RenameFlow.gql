@@ -1,0 +1,10 @@
+mutation RenameFlow($flowId: ID!, $name: String) {
+  renameFlow(flowId: $flowId, name: $name) {
+    id
+    name
+    isDefault
+    screens {
+      id
+    }
+  }
+}

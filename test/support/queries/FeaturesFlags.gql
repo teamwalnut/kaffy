@@ -1,0 +1,7 @@
+query {
+  featuresFlags {
+    autoLink
+    multipleResolutions
+    logLevel
+  }
+}

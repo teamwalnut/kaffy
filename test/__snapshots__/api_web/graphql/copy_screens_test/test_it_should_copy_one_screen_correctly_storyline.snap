@@ -1,0 +1,27 @@
+{:ok,
+ %{
+   data: %{
+     "storyline" => %{
+       "flows" => [
+         %{
+           "is_default" => true,
+           "name" => "Default",
+           "screens" => [
+             %{"id" => "scrubbed", "name" => "some name 0"},
+             %{"id" => "scrubbed", "name" => "Copy of some name 0"}
+           ]
+         }
+       ],
+       "guides" => [],
+       "id" => "scrubbed",
+       "lastEdited" => "scrubbed",
+       "name" => "storyline_0",
+       "screens" => [
+         %{"id" => "scrubbed", "name" => "some name 0"},
+         %{"id" => "scrubbed", "name" => "Copy of some name 0"}
+       ],
+       "screensCount" => 2,
+       "startScreen" => %{"id" => "scrubbed", "name" => "some name 0"}
+     }
+   }
+ }}

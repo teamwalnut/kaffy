@@ -1,0 +1,5 @@
+mutation ApproveTac {
+  approveTac {
+    isTacApproved
+  }
+}

@@ -1,0 +1,12 @@
+mutation UpdateHtmlPatch($patchId: ID!, $htmlPatchData: HtmlPatchInputObject) {
+  updateHtmlPatch(patchId: $patchId, htmlPatchData: $htmlPatchData) {
+    id
+    ... on Patch {
+      data {
+        ... on HtmlPatch {
+          html
+        }
+      }
+    }
+  }
+}

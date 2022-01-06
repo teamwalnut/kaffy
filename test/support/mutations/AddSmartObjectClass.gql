@@ -1,0 +1,11 @@
+mutation AddSmartObjectClass(
+  $storylineId: ID!
+  $smartObjectClass: NewSmartObjectClass!
+) {
+  addSmartObjectClass(
+    storylineId: $storylineId
+    smartObjectClass: $smartObjectClass
+  ) {
+    id
+  }
+}

@@ -1,0 +1,256 @@
+query GetSmartObjectInstancesFromScreen($storylineId: ID!, $screenId: ID!) {
+  screen(storylineId: $storylineId, screenId: $screenId) {
+    smartObjectInstances {
+      id
+      classId
+      screenId
+      cssSelector
+      frameSelectors
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      detached
+      editsOverrides {
+        ... on TextEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          textEditProps {
+            originalText
+            text
+          }
+        }
+        ... on StyleEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          styleEditProps {
+            underline
+            bold
+            hide
+            font_size
+            color
+          }
+        }
+        ... on ChangeImageEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          changeImageEditProps {
+            originalImageUrl
+            imageUrl
+          }
+        }
+        ... on LinkEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          linkEditProps {
+            destination {
+              ... on LinkEditScreenDestination {
+                screen {
+                  id
+                }
+                delayMs
+              }
+              ... on LinkEditUrlDestination {
+                href
+                target
+              }
+            }
+          }
+        }
+        ... on ScrollEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          scrollEditProps {
+            top
+            left
+          }
+        }
+        ... on HtmlEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          htmlEditProps {
+            originalValue
+            value
+          }
+        }
+        ... on BindingEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          bindingEditProps {
+            originalText
+            program
+          }
+        }
+      }
+      edits {
+        ... on TextEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          textEditProps {
+            originalText
+            text
+          }
+        }
+        ... on StyleEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          styleEditProps {
+            underline
+            bold
+            hide
+            font_size
+            color
+          }
+        }
+        ... on ChangeImageEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          changeImageEditProps {
+            originalImageUrl
+            imageUrl
+          }
+        }
+        ... on LinkEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          linkEditProps {
+            destination {
+              ... on LinkEditScreenDestination {
+                screen {
+                  id
+                }
+                delayMs
+              }
+              ... on LinkEditUrlDestination {
+                href
+                target
+              }
+            }
+          }
+        }
+        ... on ScrollEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          scrollEditProps {
+            top
+            left
+          }
+        }
+        ... on HtmlEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          htmlEditProps {
+            originalValue
+            value
+          }
+        }
+        ... on BindingEdit {
+          id
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+          kind
+          lastEditedAt
+          bindingEditProps {
+            originalText
+            program
+          }
+        }
+      }
+    }
+  }
+}

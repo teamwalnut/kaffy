@@ -1,0 +1,60 @@
+fragment DemoVersionFields on DemoVersion {
+  id
+  createdBy {
+    id
+    user {
+      firstName
+      lastName
+      email
+    }
+    companyId
+  }
+  insertedAt
+  updatedAt
+  startScreen {
+    id
+  }
+  guides {
+    id
+    annotations {
+      id
+      kind
+      message
+      step
+      screenId
+      cssSelector
+      frameSelectors
+      anchor
+    }
+  }
+  flows {
+    name
+    is_default
+    screens {
+      name
+      id
+      edits {
+        ... on TextEdit {
+          frameSelectors
+          cssSelector
+        }
+        ... on StyleEdit {
+          frameSelectors
+          cssSelector
+        }
+      }
+    }
+  }
+  patches {
+    data {
+      ... on HtmlPatch {
+        html
+        position
+        cssSelector
+        targetUrlGlob
+      }
+    }
+  }
+  screensCount
+  hasActiveGuides
+}

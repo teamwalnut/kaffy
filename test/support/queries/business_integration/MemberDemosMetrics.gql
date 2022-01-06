@@ -1,0 +1,15 @@
+query MemberDemosMetrics {
+  memberDemosMetrics {
+    storylineUuid
+    storylineName
+    uuid
+    name
+    started
+    bounced
+    avgScreenCompletion
+    avgTimeSpent
+    avgTimeSpentMilliseconds
+    totalVisits
+    uniqueVisitors
+  }
+}

@@ -1,0 +1,7 @@
+mutation RestoreDemo($id: ID!) {
+  restoreDemo(demoId: $id) {
+    id
+    name
+    archivedAt
+  }
+}

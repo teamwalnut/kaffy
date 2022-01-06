@@ -1,0 +1,12 @@
+<%=
+  render "components/_paragraph_with_title.html", title: "Hi!", content: "You’re invited to join our company team on Walnut!
+    <br>
+    Walnut is about great sales experiences, starting with sales demos for sales leaders.
+    <br><br>
+    I’ve already signed up, and you’re invited to join the team.
+    <br>
+    To get started, just accept the invitation and create your user.
+    <br><br>
+    Looking forward to having you onboard!"
+%>
+<%= render "components/_button.html", text: "Accept invitation", href: @invite_url %>

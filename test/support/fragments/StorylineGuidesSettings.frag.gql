@@ -1,0 +1,25 @@
+fragment StorylineGuidesSettings on StorylineGuidesSettings {
+  showGlow
+  glowColor
+  backgroundColor
+  fontColor
+  fontSize
+  accentColor
+  smoothScrolling
+  showDismissButton
+  hideDismiss
+  showBackButton
+  showMainButton
+  mainButtonText
+  dimByDefault
+  celebrateGuidesCompletion
+  showAvatar
+  avatarUrl
+  avatarTitle
+  fab {
+    enabled
+    position
+    text
+    targetUrl
+  }
+}

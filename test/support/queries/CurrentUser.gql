@@ -1,0 +1,14 @@
+#import "./UserFields.frag.gql"
+
+query {
+  currentUser {
+    ...UserFields
+    members {
+      id
+      role
+    }
+    companies {
+      id
+    }
+  }
+}

@@ -1,0 +1,24 @@
+mutation AddScreenToStoryline(
+  $storylineId: ID!
+  $screenshotImageUri: string!
+  $name: string!
+  $url: string!
+  $s3ObjectName: string!
+  $originalDimensions: dimensions!
+) {
+  addScreenToStoryline(
+    storylineId: $storylineId
+    screenshotImageUri: $screenshotImageUri
+    name: $name
+    url: $url
+    s3ObjectName: $s3ObjectName
+    originalDimensions: $originalDimensions
+  ) {
+    id
+    name
+    originalDimensions {
+      width
+      height
+    }
+  }
+}

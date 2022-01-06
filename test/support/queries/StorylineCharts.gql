@@ -1,0 +1,6 @@
+query StorylineCharts($storylineId: ID!) {
+  storylineCharts(storylineId: $storylineId) {
+    name
+    src
+  }
+}

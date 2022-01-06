@@ -1,0 +1,6 @@
+mutation UpdateScreenName($id: ID!, $name: string!) {
+  updateScreenName(id: $id, name: $name) {
+    id
+    name
+  }
+}

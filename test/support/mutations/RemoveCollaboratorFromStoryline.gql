@@ -1,0 +1,6 @@
+mutation RemoveCollaboratorFromStoryline($storylineId: ID!, $memberId: ID!) {
+  removeCollaboratorFromStoryline(
+    storylineId: $storylineId
+    memberId: $memberId
+  )
+}

@@ -1,0 +1,7 @@
+mutation CreateGuide($storylineId: ID!, $name: String!) {
+  createGuide(storylineId: $storylineId, name: $name) {
+    id
+    name
+    priority
+  }
+}

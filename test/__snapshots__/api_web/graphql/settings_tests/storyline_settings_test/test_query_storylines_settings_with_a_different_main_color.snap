@@ -1,0 +1,42 @@
+{:ok,
+ %{
+   data: %{
+     "storyline" => %{
+       "id" => "scrubbed",
+       "settings" => %{
+         "disableLoader" => true,
+         "globalCss" => nil,
+         "globalJs" => nil,
+         "guidesSettings" => %{
+           "accentColor" => "#AAAAAA",
+           "avatarTitle" => nil,
+           "avatarUrl" => nil,
+           "backgroundColor" => "#EEEEEE",
+           "celebrateGuidesCompletion" => true,
+           "dimByDefault" => true,
+           "dimStyle" => "MEDIUM",
+           "fab" => %{
+             "enabled" => false,
+             "position" => "BOTTOM_RIGHT",
+             "targetUrl" => nil,
+             "text" => nil
+           },
+           "fontColor" => "#FF0000",
+           "fontSize" => 18,
+           "glowColor" => "#DDDDDD",
+           "hideDismiss" => false,
+           "mainButtonText" => "Next",
+           "showAvatar" => false,
+           "showBackButton" => true,
+           "showDismissButton" => true,
+           "showGlow" => true,
+           "showMainButton" => true,
+           "smoothScrolling" => false
+         },
+         "id" => "scrubbed",
+         "mainColor" => "#FF0000",
+         "secondaryColor" => "#CCCCCC"
+       }
+     }
+   }
+ }}

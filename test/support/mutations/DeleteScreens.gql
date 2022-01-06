@@ -1,0 +1,6 @@
+mutation DeleteScreens($storylineId: ID!, $screenIds: [ID!]!) {
+  deleteScreens(storylineId: $storylineId, screenIds: $screenIds) {
+    id
+    name
+  }
+}

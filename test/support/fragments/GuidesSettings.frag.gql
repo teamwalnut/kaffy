@@ -1,0 +1,26 @@
+fragment GuidesSettings on GuidesSettings {
+  showGlow
+  glowColor
+  backgroundColor
+  fontColor
+  fontSize
+  accentColor
+  smoothScrolling
+  showDismissButton
+  hideDismiss
+  showBackButton
+  showMainButton
+  mainButtonText
+  dimByDefault
+  dimStyle
+  celebrateGuidesCompletion
+  showAvatar
+  avatarUrl
+  avatarTitle
+  fab {
+    enabled
+    position
+    text
+    targetUrl
+  }
+}

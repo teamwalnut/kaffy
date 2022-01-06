@@ -1,0 +1,7 @@
+mutation InviteMember($email: string!, $role: Role) {
+  inviteMember(email: $email, role: $role) {
+    id
+    email
+    role
+  }
+}

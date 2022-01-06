@@ -1,0 +1,10 @@
+mutation CreateFlow($storylineId: ID!, $name: String) {
+  createFlow(storylineId: $storylineId, name: $name) {
+    id
+    name
+    isDefault
+    screens {
+      id
+    }
+  }
+}

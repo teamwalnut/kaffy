@@ -1,0 +1,30 @@
+mutation AddModalAnnotationToGuide(
+  $guideId: ID!
+  $message: string!
+  $richTextAsJson: string!
+  $hasOverlay: Boolean!
+  $screenId: ID!
+  $settings: AnnotationSettingsInput
+) {
+  addModalAnnotationToGuide(
+    guideId: $guideId
+    message: $message
+    richTextAsJson: $richTextAsJson
+    hasOverlay: $hasOverlay
+    screenId: $screenId
+    settings: $settings
+  ) {
+    id
+    settings {
+      showMainButton
+      mainButtonText
+      showDismissButton
+      showBackButton
+      showAvatar
+      avatarUrl
+      avatarTitle
+      showDim
+      size
+    }
+  }
+}

@@ -1,0 +1,215 @@
+mutation AddEdits($screenId: ID!) {
+  addEditsToScreen(
+    screenId: $screenId
+    edits: [
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: null
+        cssSelector: ".text"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: TEXT
+        textEditProps: { originalText: "original text", text: "new text" }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".text"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: TEXT
+        textEditProps: { originalText: "original text", text: "new text" }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".style"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: STYLE
+        styleEditProps: {
+          underline: true
+          bold: true
+          hide: true
+          font_size: "10px"
+          color: "#ssss"
+        }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".image"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: CHANGE_IMAGE
+        changeImageEditProps: {
+          originalImageUrl: "original url"
+          imageUrl: "some url"
+        }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".link"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: LINK
+        linkEditProps: {
+          toUrl: { href: "https://www.google.com", target: NEW_TAB }
+        }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".link"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: LINK
+        linkEditProps: { toScreen: { id: $screenId, delayMs: 1000 } }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".scroll"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: SCROLL
+        scrollEditProps: { top: 125.0, left: 0.0 }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".html"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: HTML
+        htmlEditProps: {
+          originalValue: "original dom element"
+          value: "updated dom element"
+        }
+      }
+      {
+        domSelector: { xpathNode: "div" }
+        frameSelectors: ["iframe"]
+        cssSelector: ".bind"
+        lastEditedAt: "2021-02-21T15:44:56.868Z"
+        kind: BINDING
+        bindingEditProps: {
+          originalText: "original dom element"
+          program: "{\"@astVersion\":\"Ast_20210525\",\"@envVersion\":\"Env_20210525\",\"@expression\":{\"@args\":[{\"@name\":\"name\",\"@value\":\"name test\"},{\"@name\":\"defaultValue\",\"@value\":\"default value\"},{\"@name\":\"description\",\"@value\":\"desc\"}],\"@fnName\":\"PUBLIC_FIELD\",\"@id\":\"ef44f562-1d5e-4d38-bf59-7ef7a402380d\",\"@type\":\"Call\"}}"
+        }
+      }
+    ]
+  ) {
+    ... on TextEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      textEditProps {
+        originalText
+        text
+      }
+    }
+    ... on StyleEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      styleEditProps {
+        underline
+        bold
+        hide
+        font_size
+        color
+      }
+    }
+    ... on ChangeImageEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      changeImageEditProps {
+        originalImageUrl
+        imageUrl
+      }
+    }
+    ... on LinkEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      linkEditProps {
+        destination {
+          ... on LinkEditScreenDestination {
+            screen {
+              id
+            }
+            delayMs
+          }
+          ... on LinkEditUrlDestination {
+            href
+            target
+          }
+        }
+      }
+    }
+    ... on ScrollEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      scrollEditProps {
+        top
+        left
+      }
+    }
+    ... on HtmlEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      htmlEditProps {
+        originalValue
+        value
+      }
+    }
+    ... on BindingEdit {
+      id
+      frameSelectors
+      cssSelector
+      domSelector {
+        xpathNode
+        xpathFrames
+      }
+      kind
+      lastEditedAt
+      bindingEditProps {
+        originalText
+        program
+      }
+    }
+  }
+}

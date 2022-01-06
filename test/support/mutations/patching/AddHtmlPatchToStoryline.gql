@@ -1,0 +1,13 @@
+mutation AddHtmlPatchToStoryline(
+  $name: String!
+  $storylineId: ID!
+  $htmlPatch: HtmlPatchInputObject
+) {
+  addHtmlPatchToStoryline(
+    name: $name
+    storylineId: $storylineId
+    htmlPatch: $htmlPatch
+  ) {
+    id
+  }
+}

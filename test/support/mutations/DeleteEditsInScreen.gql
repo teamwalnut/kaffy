@@ -1,0 +1,3 @@
+mutation DeleteEditsInScreen($screenId: ID!, $edits: [DELETE_EDIT!]!) {
+  deleteEditsInScreen(screenId: $screenId, edits: $edits)
+}

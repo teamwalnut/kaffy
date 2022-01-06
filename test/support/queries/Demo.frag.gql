@@ -1,0 +1,17 @@
+fragment DemoFields on Demo {
+  id
+  name
+  isShared
+  lastPlayed
+  insertedAt
+  updatedAt
+  archivedAt
+  storyline {
+    id
+  }
+  activeVersion {
+    id
+    screensCount
+    hasActiveGuides
+  }
+}

@@ -1,0 +1,9 @@
+mutation RenameDemo($demoId: ID!, $name: String) {
+  renameDemo(demoId: $demoId, name: $name) {
+    id
+    name
+    storyline {
+      id
+    }
+  }
+}

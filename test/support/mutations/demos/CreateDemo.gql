@@ -1,0 +1,16 @@
+mutation CreateDemo(
+  $storylineId: ID!
+  $name: String!
+  $variables: [VariableInput!]
+) {
+  createDemo(storylineId: $storylineId, name: $name, variables: $variables) {
+    id
+    name
+    storyline {
+      id
+    }
+    activeVersion {
+      id
+    }
+  }
+}

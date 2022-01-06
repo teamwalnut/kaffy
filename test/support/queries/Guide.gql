@@ -1,0 +1,15 @@
+query Guide($storylineId: ID) {
+  guide(storylineId: $storylineId) {
+    id
+    annotations {
+      id
+      kind
+      message
+      step
+      screenId
+      cssSelector
+      frameSelectors
+      anchor
+    }
+  }
+}

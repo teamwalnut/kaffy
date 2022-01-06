@@ -1,0 +1,22 @@
+#import "../../fragments/GuidesSettings.frag.gql"
+mutation UpdateCompanySettings(
+  $mainColor: String
+  $secondaryColor: String
+  $disableLoader: Boolean
+  $guidesSettings: GuidesSettingsInput
+) {
+  updateCompanySettings(
+    mainColor: $mainColor
+    secondaryColor: $secondaryColor
+    disableLoader: $disableLoader
+    guidesSettings: $guidesSettings
+  ) {
+    id
+    mainColor
+    secondaryColor
+    disableLoader
+    guidesSettings {
+      ...GuidesSettings
+    }
+  }
+}

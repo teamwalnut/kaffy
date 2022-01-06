@@ -1,0 +1,6 @@
+mutation RenameSmartObjectClass($smartObjectClassId: ID!, $name: String!) {
+  renameSmartObjectClass(name: $name, smartObjectClassId: $smartObjectClassId) {
+    id
+    name
+  }
+}

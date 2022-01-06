@@ -1,0 +1,12 @@
+mutation StartFindAndReplaceJob(
+  $storylineId: ID!
+  $from: String!
+  $to: String!
+) {
+  startFindAndReplaceJob(storylineId: $storylineId, from: $from, to: $to) {
+    ... on FindAndReplacePending {
+      id
+      queuedAt
+    }
+  }
+}

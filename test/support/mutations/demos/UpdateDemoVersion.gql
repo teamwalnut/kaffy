@@ -1,0 +1,20 @@
+mutation UpdateDemoVersion(
+  $storylineId: ID!
+  $demoId: ID!
+  $variables: [VariableInput!]
+) {
+  updateDemoVersion(
+    storylineId: $storylineId
+    demoId: $demoId
+    variables: $variables
+  ) {
+    id
+    name
+    storyline {
+      id
+    }
+    activeVersion {
+      id
+    }
+  }
+}

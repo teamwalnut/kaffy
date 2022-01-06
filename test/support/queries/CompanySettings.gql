@@ -1,0 +1,12 @@
+#import "../fragments/GuidesSettings.frag.gql"
+query CompanySettings {
+  companySettings {
+    id
+    mainColor
+    secondaryColor
+    disableLoader
+    guidesSettings {
+      ...GuidesSettings
+    }
+  }
+}

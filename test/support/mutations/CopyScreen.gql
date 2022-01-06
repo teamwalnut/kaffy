@@ -1,0 +1,7 @@
+mutation CopyScreen($storylineId: ID!, $screenId: ID!) {
+  copyScreen(storylineId: $storylineId, screenId: $screenId) {
+    id
+    name
+    lastEdited
+  }
+}

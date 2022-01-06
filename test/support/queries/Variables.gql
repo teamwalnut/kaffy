@@ -1,0 +1,9 @@
+query Variables($storylineId: ID) {
+  variables(storylineId: $storylineId) {
+    id
+    name
+    description
+    defaultValue
+    kind
+  }
+}

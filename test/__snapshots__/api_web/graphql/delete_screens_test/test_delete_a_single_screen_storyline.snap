@@ -1,0 +1,21 @@
+{:ok,
+ %{
+   data: %{
+     "storyline" => %{
+       "flows" => [
+         %{
+           "is_default" => true,
+           "name" => "Default",
+           "screens" => [%{"id" => "scrubbed", "name" => "First screen"}]
+         }
+       ],
+       "guides" => [],
+       "id" => "scrubbed",
+       "lastEdited" => "scrubbed",
+       "name" => "storyline_0",
+       "screens" => [%{"id" => "scrubbed", "name" => "First screen"}],
+       "screensCount" => 1,
+       "startScreen" => %{"id" => "scrubbed", "name" => "First screen"}
+     }
+   }
+ }}

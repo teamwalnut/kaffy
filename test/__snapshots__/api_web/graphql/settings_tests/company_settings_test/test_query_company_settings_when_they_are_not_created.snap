@@ -1,0 +1,37 @@
+{:ok,
+ %{
+   data: %{
+     "companySettings" => %{
+       "disableLoader" => false,
+       "guidesSettings" => %{
+         "accentColor" => "#3B67E9",
+         "avatarTitle" => nil,
+         "avatarUrl" => nil,
+         "backgroundColor" => "#FFFFFF",
+         "celebrateGuidesCompletion" => true,
+         "dimByDefault" => false,
+         "dimStyle" => "MEDIUM",
+         "fab" => %{
+           "enabled" => false,
+           "position" => "BOTTOM_RIGHT",
+           "targetUrl" => nil,
+           "text" => nil
+         },
+         "fontColor" => "#292930",
+         "fontSize" => 12,
+         "glowColor" => "#3b85e948",
+         "hideDismiss" => false,
+         "mainButtonText" => "Next",
+         "showAvatar" => false,
+         "showBackButton" => true,
+         "showDismissButton" => true,
+         "showGlow" => true,
+         "showMainButton" => true,
+         "smoothScrolling" => true
+       },
+       "id" => "scrubbed",
+       "mainColor" => "#6E1DF4",
+       "secondaryColor" => "#3B67E9"
+     }
+   }
+ }}

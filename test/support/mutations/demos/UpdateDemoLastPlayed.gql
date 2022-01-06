@@ -1,0 +1,6 @@
+mutation UpdateDemoLastPlayed($demoId: ID!) {
+  updateDemoLastPlayed(demoId: $demoId) {
+    id
+    lastPlayed
+  }
+}

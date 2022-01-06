@@ -1,0 +1,45 @@
+mutation UpdateAnnotation(
+  $id: ID!
+  $kind: AnnotationKind
+  $screenId: ID
+  $message: String
+  $richTextAsJson: String
+  $cssSelector: String
+  $frameSelectors: [String!]
+  $anchor: Anchor
+  $hasOverlay: Boolean
+  $settings: AnnotationSettingsInput
+) {
+  updateAnnotation(
+    id: $id
+    kind: $kind
+    screenId: $screenId
+    message: $message
+    richTextAsJson: $richTextAsJson
+    cssSelector: $cssSelector
+    frameSelectors: $frameSelectors
+    anchor: $anchor
+    hasOverlay: $hasOverlay
+    settings: $settings
+  ) {
+    id
+    kind
+    screenId
+    message
+    cssSelector
+    frameSelectors
+    anchor
+    hasOverlay
+    settings {
+      showMainButton
+      mainButtonText
+      showDismissButton
+      showBackButton
+      showAvatar
+      avatarUrl
+      avatarTitle
+      showDim
+      size
+    }
+  }
+}

@@ -1,0 +1,2 @@
+{:ok,
+ %{data: %{"createOrUpdateVariable" => %{"id" => "scrubbed", "name" => "name"}}}}

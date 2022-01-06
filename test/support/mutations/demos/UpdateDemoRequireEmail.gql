@@ -1,0 +1,6 @@
+mutation UpdateDemoIsEmailRequired($id: ID!, $isEmailRequired: Boolean!) {
+  updateDemoGate(demoId: $id, isEmailRequired: $isEmailRequired) {
+    id
+    emailRequired
+  }
+}

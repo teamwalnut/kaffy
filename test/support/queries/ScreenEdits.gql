@@ -1,0 +1,24 @@
+query Storyline($id: ID) {
+  storyline(id: $id) {
+    screens {
+      edits {
+        ... on TextEdit {
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+        }
+        ... on StyleEdit {
+          frameSelectors
+          cssSelector
+          domSelector {
+            xpathNode
+            xpathFrames
+          }
+        }
+      }
+    }
+  }
+}

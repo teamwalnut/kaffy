@@ -1,0 +1,5 @@
+mutation RemovePatch($patchId: ID!) {
+  removePatch(patchId: $patchId) {
+    id
+  }
+}

@@ -1,0 +1,14 @@
+query SmartObjectInstances($screenId: ID!) {
+  smartObjectInstances(id: $screenId) {
+    id
+    screenId
+    classId
+    isDetached
+    cssSelector
+    frameSelectors
+    editsOverrides
+    edits {
+      __typename
+    }
+  }
+}

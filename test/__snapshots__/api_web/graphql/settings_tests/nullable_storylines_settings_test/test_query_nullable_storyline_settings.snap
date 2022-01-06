@@ -1,0 +1,36 @@
+{:ok,
+ %{
+   data: %{
+     "storylineSettings" => %{
+       "disableLoader" => nil,
+       "guidesSettings" => %{
+         "accentColor" => nil,
+         "avatarTitle" => nil,
+         "avatarUrl" => nil,
+         "backgroundColor" => nil,
+         "celebrateGuidesCompletion" => nil,
+         "dimByDefault" => nil,
+         "fab" => %{
+           "enabled" => nil,
+           "position" => nil,
+           "targetUrl" => nil,
+           "text" => nil
+         },
+         "fontColor" => nil,
+         "fontSize" => nil,
+         "glowColor" => nil,
+         "hideDismiss" => nil,
+         "mainButtonText" => nil,
+         "showAvatar" => nil,
+         "showBackButton" => nil,
+         "showDismissButton" => nil,
+         "showGlow" => nil,
+         "showMainButton" => nil,
+         "smoothScrolling" => nil
+       },
+       "id" => "scrubbed",
+       "mainColor" => nil,
+       "secondaryColor" => nil
+     }
+   }
+ }}

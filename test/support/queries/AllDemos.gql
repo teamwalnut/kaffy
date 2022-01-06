@@ -1,0 +1,6 @@
+#import "./Demo.frag.gql"
+query AllDemos($isArchived: Boolean) {
+  allDemos(isArchived: $isArchived) {
+    ...DemoFields
+  }
+}

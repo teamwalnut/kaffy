@@ -1,0 +1,6 @@
+mutation RepositionAnnotation($id: ID!, $step: Int!) {
+  repositionAnnotation(id: $id, step: $step) {
+    id
+    step
+  }
+}

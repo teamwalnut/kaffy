@@ -1,0 +1,8 @@
+{:ok,
+ %{
+   data: %{
+     "updateSmartObjectInstancesInScreen" => [
+       %{"classId" => "scrubbed", "id" => "scrubbed"}
+     ]
+   }
+ }}

@@ -1,0 +1,28 @@
+mutation AcceptMemberInvitation(
+  $token: string!
+  $firstName: string!
+  $lastName: string!
+  $password: string!
+  $passwordConfirmation: string!
+) {
+  acceptMemberInvitation(
+    token: $token
+    userAttributes: {
+      firstName: $firstName
+      lastName: $lastName
+      password: $password
+      passwordConfirmation: $passwordConfirmation
+    }
+  ) {
+    id
+    user {
+      email
+      firstName
+      lastName
+      confirmedAt
+    }
+    company {
+      id
+    }
+  }
+}

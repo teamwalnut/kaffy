@@ -1,0 +1,20 @@
+mutation UpdateStoryline(
+  $storylineId: ID!
+  $name: String
+  $isPublic: Boolean
+  $startScreenId: ID
+) {
+  updateStoryline(
+    storylineId: $storylineId
+    name: $name
+    isPublic: $isPublic
+    startScreenId: $startScreenId
+  ) {
+    id
+    name
+    isPublic
+    startScreen {
+      id
+    }
+  }
+}

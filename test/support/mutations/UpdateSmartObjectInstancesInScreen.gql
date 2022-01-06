@@ -1,0 +1,12 @@
+mutation UpdateSmartObjectInstancesInScreen(
+  $screenId: ID!
+  $instances: [NewSmartObjectInstance!]!
+) {
+  updateSmartObjectInstancesInScreen(
+    screenId: $screenId
+    instances: $instances
+  ) {
+    id
+    classId
+  }
+}

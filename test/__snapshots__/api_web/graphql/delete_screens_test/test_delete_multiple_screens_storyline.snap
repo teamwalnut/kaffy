@@ -1,0 +1,17 @@
+{:ok,
+ %{
+   data: %{
+     "storyline" => %{
+       "flows" => [
+         %{"is_default" => true, "name" => "Default", "screens" => []}
+       ],
+       "guides" => [],
+       "id" => "scrubbed",
+       "lastEdited" => "scrubbed",
+       "name" => "storyline_0",
+       "screens" => [],
+       "screensCount" => 0,
+       "startScreen" => nil
+     }
+   }
+ }}
