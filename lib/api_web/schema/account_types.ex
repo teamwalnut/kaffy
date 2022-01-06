@@ -1,6 +1,7 @@
 defmodule ApiWeb.Schema.AccountTypes do
   @moduledoc false
   use Absinthe.Schema.Notation
+  require Logger
   import Absinthe.Resolution.Helpers
 
   input_object :user_accept_invite_props do
@@ -34,11 +35,13 @@ defmodule ApiWeb.Schema.AccountTypes do
 
           %User{} = user ->
             {:ok, encoded_token} = Api.Accounts.create_reset_password_token(user)
+
             ApiWeb.Emails.Users.reset_password(user, email, encoded_token)
             |> Api.Mailer.deliver_later!()
         end
 
         {:ok, email}
+      end)
     end
   end
 

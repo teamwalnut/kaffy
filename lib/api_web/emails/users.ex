@@ -13,7 +13,7 @@ defmodule ApiWeb.Emails.Users do
   # TODO(Roland): document this function
   def reset_password(%Accounts.User{} = user, email, token) do
     base_email(email)
-    |> subject("You are invited to join #{company.name} on Walnut 🥳")
+    |> subject("You are invited to join #{user.name} on Walnut 🥳")
     |> put_html_layout({ApiWeb.EmailView, "layout.html"})
     |> assign(:invite_url, "https://app.teamwalnut.com/reset_password?token=#{token}")
     |> render("users/reset_password.html")
