@@ -172,13 +172,33 @@ defmodule Kaffy.ResourceForm do
 
         textarea(form, field, [value: value, rows: 4, placeholder: "JSON Content"] ++ opts)
 
-      {:array, _} ->
-        value =
-          data
-          |> Map.get(field, "")
-          |> Kaffy.Utils.json().encode!(escape: :html_safe, pretty: true)
+      {:parameterized, Ecto.Enum, _} ->
+        values = Ecto.Enum.values(schema, field)
+        value = Map.get(data, field, nil)
 
-        textarea(form, field, [value: value, rows: 4, placeholder: "JSON Content"] ++ opts)
+        select(form, field, values, [value: value] ++ opts)
+
+      {:array, {:parameterized, Ecto.Enum, _}} ->
+        values = Ecto.Enum.values(schema, field)
+        value = Map.get(data, field, nil)
+
+        multiple_select(form, field, values, [value: value] ++ opts)
+
+      {:array, _} ->
+        case !is_nil(options[:values_fn]) && is_function(options[:values_fn], 2) do
+          true ->
+            values = options[:values_fn].(data, conn)
+            value = Map.get(data, field, nil)
+            multiple_select(form, field, values, [value: value] ++ opts)
+
+          false ->
+            value =
+              data
+              |> Map.get(field, "")
+              |> Kaffy.Utils.json().encode!(escape: :html_safe, pretty: true)
+
+            textarea(form, field, [value: value, rows: 4, placeholder: "JSON Content"] ++ opts)
+        end
 
       :file ->
         file_input(form, field, opts)
@@ -364,6 +384,9 @@ defmodule Kaffy.ResourceForm do
 
   defp build_changeset_value(value) when is_tuple(value),
     do: value |> Tuple.to_list() |> Enum.join(", ")
+
+  defp build_changeset_value(value) when is_list(value),
+    do: value |> Enum.join(", ")
 
   defp build_changeset_value(value), do: to_string(value)
 
