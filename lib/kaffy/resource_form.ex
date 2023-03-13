@@ -124,7 +124,7 @@ defmodule Kaffy.ResourceForm do
         text_input(form, field, opts)
 
       :richtext ->
-        opts = Keyword.put(opts, :class, "kaffy-editor")
+        opts = add_class(opts, "kaffy-editor")
         textarea(form, field, opts)
 
       :textarea ->
@@ -140,8 +140,8 @@ defmodule Kaffy.ResourceForm do
         text_input(form, field, opts)
 
       t when t in [:boolean, :boolean_checkbox] ->
-        checkbox_opts = Keyword.put(opts, :class, "custom-control-input")
-        label_opts = Keyword.put(opts, :class, "custom-control-label")
+        checkbox_opts = add_class(opts, "custom-control-input")
+        label_opts = add_class(opts, "custom-control-label")
 
         [
           {:safe, ~s(<div class="custom-control custom-checkbox">)},
@@ -151,8 +151,8 @@ defmodule Kaffy.ResourceForm do
         ]
 
       :boolean_switch ->
-        checkbox_opts = Keyword.put(opts, :class, "custom-control-input")
-        label_opts = Keyword.put(opts, :class, "custom-control-label")
+        checkbox_opts = add_class(opts, "custom-control-input")
+        label_opts = add_class(opts, "custom-control-label")
 
         [
           {:safe, ~s(<div class="custom-control custom-switch">)},
@@ -246,8 +246,8 @@ defmodule Kaffy.ResourceForm do
   end
 
   defp flatpickr_generic(form, field, opts, placeholder, fp_class, icon \\ "📅") do
-    opts = Keyword.put(opts, :class, "flatpickr-input")
-    opts = Keyword.put(opts, :class, "form-control")
+    opts = add_class(opts, "flatpickr-input")
+    opts = add_class(opts, "form-control")
     opts = Keyword.put(opts, :id, "inlineFormInputGroup")
     opts = Keyword.put(opts, :placeholder, placeholder)
     opts = Keyword.put(opts, :"data-input", "")
@@ -422,5 +422,9 @@ defmodule Kaffy.ResourceForm do
           [label_tag, field_tag, field_feeback]
         end
     end
+  end
+
+  defp add_class(opts, class) do
+    Keyword.update(opts, :class, class, &"#{&1} #{class}")
   end
 end
