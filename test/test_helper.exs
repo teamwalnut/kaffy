@@ -1,4 +1,5 @@
 ExUnit.start()
+Application.put_env(:phoenix, :json_library, Jason)
 
 defmodule KaffyTest.Schemas.Person do
   use Ecto.Schema
@@ -40,5 +41,15 @@ defmodule KaffyTest.Schemas.Company do
   schema "companies" do
     field(:name, :string)
     has_many(:people, KaffyTest.Schemas.Person)
+  end
+end
+
+defmodule KaffyTest.Schemas.Owner do
+  use Ecto.Schema
+
+  @primary_key false
+  schema "owner" do
+    field :person_id, :id, primary_key: true
+    field :pet_id, :id, primary_key: true
   end
 end
