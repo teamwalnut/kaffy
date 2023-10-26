@@ -8,8 +8,8 @@ defmodule Kaffy.ResourceQuery do
     page = Map.get(params, "page", "1") |> String.to_integer()
     search = Map.get(params, "search", "") |> String.trim()
     search_fields = Kaffy.ResourceAdmin.search_fields(resource)
-    filtered_fields = get_filter_fields(params, resource)
-    ordering = get_ordering(resource, params)
+    filtered_fields = get_filter_fields(conn.query_params, resource)
+    ordering = get_ordering(resource, conn.query_params)
 
     current_offset = (page - 1) * per_page
     schema = resource[:schema]
@@ -52,7 +52,9 @@ defmodule Kaffy.ResourceQuery do
 
   def fetch_resource(conn, resource, id) do
     schema = resource[:schema]
-    query = from(s in schema, where: s.id == ^id)
+
+    id_filter = Kaffy.ResourceAdmin.deserialize_id(resource, id)
+    query = from(s in schema, where: ^id_filter)
 
     case Kaffy.ResourceAdmin.custom_show_query(conn, resource, query) do
       {custom_query, opts} -> Kaffy.Utils.repo().one(custom_query, opts)
@@ -65,8 +67,13 @@ defmodule Kaffy.ResourceQuery do
   def fetch_list(resource, ids) do
     schema = resource[:schema]
 
-    from(s in schema, where: s.id in ^ids)
-    |> Kaffy.Utils.repo().all()
+    primary_keys = Kaffy.ResourceSchema.primary_keys(schema)
+    ids = Enum.map(ids, &Kaffy.ResourceAdmin.deserialize_id(resource, &1))
+
+    case build_list_query(schema, primary_keys, ids) do
+      {:error, error_msg} -> {:error, error_msg}
+      query -> Kaffy.Utils.repo().all(query)
+    end
   end
 
   def total_count(schema, do_cache, query, opts \\ [])
@@ -98,7 +105,9 @@ defmodule Kaffy.ResourceQuery do
     filtered_fields = Enum.filter(params, fn {k, v} -> k in schema_fields and v != "" end)
 
     Enum.map(filtered_fields, fn {name, value} ->
-      %{name: name, value: value}
+      f = String.to_existing_atom(name)
+      field_type = Kaffy.ResourceSchema.field_type(resource[:schema], f)
+      %{name: name, value: value, type: field_type}
     end)
   end
 
@@ -121,22 +130,83 @@ defmodule Kaffy.ResourceQuery do
         true ->
           term =
             search
+            |> String.trim()
             |> String.replace("%", "\%")
             |> String.replace("_", "\_")
 
-          term = "%#{term}%"
+          {term, term_type} =
+            case Decimal.parse(term) do
+              {:ok, value} ->
+                # this is the return value for the decimal package pre-2.0
+                number = if value.exp >= 0, do: :integer, else: :decimal
+
+                case number do
+                  :integer ->
+                    v = Decimal.to_integer(value) |> to_string()
+                    {v, number}
+
+                  :decimal ->
+                    {term, number}
+                end
+
+              {value, ""} ->
+                # this is the return value for the decimal package since 2.0
+                number = if Decimal.integer?(value), do: :integer, else: :decimal
+
+                case number do
+                  :integer ->
+                    v = Decimal.to_integer(value) |> to_string()
+                    {v, number}
+
+                  :decimal ->
+                    {term, number}
+                end
+
+              _ ->
+                {term, :string}
+            end
 
           Enum.reduce(search_fields, query, fn
-            {association, fields}, q ->
-              query = from(s in q, join: a in assoc(s, ^association))
-
+            {association, fields}, q when is_list(fields) ->
+              query = from(s in q, left_join: a in assoc(s, ^association))
+              
               Enum.reduce(fields, query, fn f, current_query ->
-                from([..., r] in current_query,
-                  or_where: ilike(type(field(r, ^f), :string), ^term)
-                )
+                the_association = Kaffy.ResourceSchema.association(schema, association).queryable
+
+                if Kaffy.ResourceSchema.field_type(the_association, f) == :string or
+                     term_type == :string do
+                  term = "%#{term}%"
+
+                  from([..., r] in current_query,
+                    or_where: ilike(type(field(r, ^f), :string), ^term)
+                  )
+                else
+                  if Kaffy.ResourceSchema.field_type(schema, f) in [:id, :integer] and
+                       term_type == :decimal do
+                    current_query
+                  else
+                    from([..., r] in current_query,
+                      or_where: field(r, ^f) == ^term
+                    )
+                  end
+                end
               end)
 
+            {f, t}, q when is_atom(t) ->
+              if Kaffy.ResourceSchema.field_type(schema, f) == :string or term_type == :string do
+                term = "%#{term}%"
+                from(s in q, or_where: ilike(type(field(s, ^f), :string), ^term))
+              else
+                if Kaffy.ResourceSchema.field_type(schema, f) in [:id, :integer] and
+                     term_type == :decimal do
+                  q
+                else
+                  from(s in q, or_where: field(s, ^f) == ^term)
+                end
+              end
+
             f, q ->
+              term = "%#{term}%"
               from(s in q, or_where: ilike(type(field(s, ^f), :string), ^term))
           end)
       end
@@ -149,6 +219,21 @@ defmodule Kaffy.ResourceQuery do
     {query, limited_query}
   end
 
+  defp build_list_query(_schema, [], _key_pairs) do
+    {:error, "No private keys. List action not supported."}
+  end
+
+  defp build_list_query(schema, [primary_key], ids) do
+    ids = Enum.map(ids, fn [{_key, id}] -> id end)
+    from(s in schema, where: field(s, ^primary_key) in ^ids)
+  end
+
+  defp build_list_query(schema, _composite_key, key_pairs) do
+    Enum.reduce(key_pairs, schema, fn pair, query_acc ->
+      from(query_acc, or_where: ^pair)
+    end)
+  end
+
   defp build_filtered_fields_query(query, []), do: query
 
   defp build_filtered_fields_query(query, [filter | rest]) do
@@ -159,7 +244,14 @@ defmodule Kaffy.ResourceQuery do
 
         false ->
           field_name = String.to_existing_atom(filter.name)
-          from(s in query, where: field(s, ^field_name) == ^filter.value)
+
+          case filter.type do
+            {:array, :string} ->
+              from(s in query, where: ^filter.value in field(s, ^field_name))
+
+            _ ->
+              from(s in query, where: field(s, ^field_name) == ^filter.value)
+          end
       end
 
     build_filtered_fields_query(query, rest)
