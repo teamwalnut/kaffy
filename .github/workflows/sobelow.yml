@@ -14,7 +14,7 @@ name: Sobelow
 
 on:
   schedule:
-    - cron: '30 11 * * 2'
+    - cron: '10 15 * * 2'
 
 permissions:
   contents: read
@@ -35,3 +35,8 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: results.sarif
+      - name: Upload artifact 
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact.sarif
+          path: results.sarif 
