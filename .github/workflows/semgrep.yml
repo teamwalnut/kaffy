@@ -3,7 +3,7 @@ name: Semgrep
 
 on:
   schedule:
-    - cron: "00 13 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
+    - cron: "30 13 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
     # It is recommended to change the schedule to a random time.
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       # Run the "semgrep ci --sarif" command on the command line of the docker image.
       - run: semgrep ci --sarif > semgrep.sarif
         env:
-          SEMGREP_RULES: "./semgrep-rules"
+          SEMGREP_RULES: "./semgrep-rules/elixir/lang"
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
