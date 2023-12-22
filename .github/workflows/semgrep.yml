@@ -3,7 +3,7 @@ name: Semgrep
 
 on:
   schedule:
-    - cron: "00 14 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
+    - cron: "30 14 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
     # It is recommended to change the schedule to a random time.
 
 jobs:
@@ -38,8 +38,11 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: semgrep.sarif
+        if: always()
       - name: Upload artifact 
         uses: actions/upload-artifact@v4
         with:
           name: semgrep.sarif
           path: semgrep.sarif 
+        if: always()
+        
