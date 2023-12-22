@@ -1,47 +1,36 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# This workflow file requires a free account on Semgrep.dev to
-# manage rules, file ignores, notifications, and more.
-#
-# See https://semgrep.dev/docs
-
+# Name of this GitHub Actions workflow.
 name: Semgrep
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "master" ]
   schedule:
-    - cron: '15 14 * * 3'
-
-permissions:
-  contents: read
+    - cron: "30 12 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
+    # It is recommended to change the schedule to a random time.
 
 jobs:
   semgrep:
-    permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-    name: Scan
+    # User definable name of this GitHub Actions job.
+    name: semgrep/ci 
+    # If you are self-hosting, change the following `runs-on` value: 
     runs-on: ubuntu-latest
+
+    container:
+      # A Docker image with Semgrep installed. Do not change this.
+      image: returntocorp/semgrep
+
     steps:
-      # Checkout project source
+      # Fetch project source with GitHub Actions Checkout.
       - uses: actions/checkout@v3
-
-      # Scan code using project's configuration on https://semgrep.dev/manage
-      - uses: returntocorp/semgrep-action@fcd5ab7459e8d91cb1777481980d1b18b4fc6735
+      # Fetch semgrep-rules with GitHub Actions Checkout.
+      - uses: actions/checkout@v3
         with:
-          generateSarif: "1"
-
+          repository: semgrep/semgrep-rules
+          path: "./semgrep-rules"
+      # Run the "semgrep ci --sarif" command on the command line of the docker image.
+      - run: semgrep ci --sarif > semgrep.sarif
+        env:
+          SEMGREP_RULES: "./semgrep-rules"
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: semgrep.sarif
-        if: always()
