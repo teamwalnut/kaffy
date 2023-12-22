@@ -3,7 +3,7 @@ name: Semgrep
 
 on:
   schedule:
-    - cron: "30 13 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
+    - cron: "00 14 * * *" # Sets Semgrep to scan every day at 12:30 UTC.
     # It is recommended to change the schedule to a random time.
 
 jobs:
@@ -25,10 +25,14 @@ jobs:
         with:
           repository: semgrep/semgrep-rules
           path: "./semgrep-rules"
+      # clone gitlab repo to fetch gitlab rules
+      - name: Clone private repo
+        run: git clone https://gitlab.com/gitlab-org/security-products/sast-rules.git
       # Run the "semgrep ci --sarif" command on the command line of the docker image.
       - run: semgrep ci --sarif > semgrep.sarif
         env:
-          SEMGREP_RULES: "./semgrep-rules/elixir/lang"
+          #SEMGREP_RULES: "./semgrep-rules/elixir/lang"
+          SEMGREP_RULES: "./sast-rules/javascript"
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
