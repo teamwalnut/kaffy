@@ -2,7 +2,7 @@
   "name": "kaffy",
   "description": "Powerfully simple admin package for phoenix applications",
   "dependencies": {
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^5.0.0",
     "compass-mixins": "^0.12.10"
   },
   "author": "aesmail",
