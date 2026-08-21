@@ -41,14 +41,30 @@ defmodule Kaffy.ResourceQuery do
 
   def get_ordering(resource, params) do
     default_ordering = Kaffy.ResourceAdmin.ordering(resource)
-    default_order_field = Map.get(params, "_of", "nil") |> String.to_existing_atom()
-    default_order_way = Map.get(params, "_ow", "nil") |> String.to_existing_atom()
 
-    case is_nil(default_order_field) or is_nil(default_order_way) do
-      true -> default_ordering
-      false -> [{default_order_way, default_order_field}]
+    with order_field when not is_nil(order_field) <- sortable_field(resource, params["_of"]),
+         order_way when order_way in [:asc, :desc] <- order_way(params["_ow"]) do
+      [{order_way, order_field}]
+    else
+      _ -> default_ordering
     end
   end
+
+  def sortable_field?(resource, field) when is_atom(field) do
+    field in resource[:schema].__schema__(:fields)
+  end
+
+  def sortable_field?(_resource, _field), do: false
+
+  defp sortable_field(resource, field) when is_binary(field) do
+    Enum.find(resource[:schema].__schema__(:fields), &(to_string(&1) == field))
+  end
+
+  defp sortable_field(_resource, _field), do: nil
+
+  defp order_way("asc"), do: :asc
+  defp order_way("desc"), do: :desc
+  defp order_way(_order_way), do: nil
 
   def fetch_resource(conn, resource, id) do
     schema = resource[:schema]
